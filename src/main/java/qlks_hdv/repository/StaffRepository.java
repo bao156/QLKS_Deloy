@@ -1,5 +1,6 @@
 package qlks_hdv.repository;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import qlks_hdv.entity.Staff;
@@ -17,4 +18,6 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
   Boolean existsByPhone(String phoneNumber);
 
   Boolean existsByEmail(String email);
+
+  Optional<List<Staff>> getAllBy();
 }

@@ -11,4 +11,5 @@ public interface RoomRepostiory extends JpaRepository<Room, String> {
 
   Optional<List<Room>> getAllByStatus(String status);
 
+
 }

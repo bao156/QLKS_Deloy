@@ -1,5 +1,7 @@
 package qlks_hdv.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -80,5 +82,15 @@ public class CustomerService implements ICustomerService {
 
   }
 
+  @Override
+  public List<GetCustomerResponse> getCustomerResponseList() {
+    List<Customer> customerList = customerRepository.findAllBy()
+        .orElseThrow(() -> new NotFoundException("list-be-empty"));
+    List<GetCustomerResponse> getCustomerReponseList = customerList.stream()
+        .map(develop -> customerMapper
+            .mapToGetCustomerResponse(develop, develop.getUser().getUsername()))
+        .collect(Collectors.toList());
+    return getCustomerReponseList;
+  }
 
 }

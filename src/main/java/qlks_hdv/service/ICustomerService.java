@@ -1,5 +1,6 @@
 package qlks_hdv.service;
 
+import java.util.List;
 import qlks_hdv.request.CreateCustomerRequest;
 import qlks_hdv.request.UpdateCustomerRequest;
 import qlks_hdv.response.GetCustomerResponse;
@@ -16,5 +17,5 @@ public interface ICustomerService {
 
   GetCustomerResponse getCustomerByCustomerId(Integer customerId);
 
-
+  List<GetCustomerResponse> getCustomerResponseList();
 }

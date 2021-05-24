@@ -1,5 +1,7 @@
 package qlks_hdv.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -81,6 +83,16 @@ public class StaffService implements IStaffService {
     Staff staff = staffRepository.findById(staffId)
         .orElseThrow(() -> new NotFoundException("staff-not-found"));
     return staffMapper.mapToGetStaffResponse(staff);
+  }
+
+  @Override
+  public List<GetStaffResponse> getStaffList() {
+    List<Staff> staffList = staffRepository.getAllBy()
+        .orElseThrow(() -> new NotFoundException("list-be-empty"));
+    List<GetStaffResponse> getStaffReponseList = staffList.stream()
+        .map(develop -> staffMapper.mapToGetStaffResponse(develop))
+        .collect(Collectors.toList());
+    return getStaffReponseList;
   }
 
 }

@@ -1,5 +1,6 @@
 package qlks_hdv.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,11 @@ public class CustomerController {
       @PathVariable("customerId") Integer customerId) {
     customerService.deleteCustomer(customerId);
     return ResponseEntity.ok().build();
+  }
+
+  @GetMapping
+  public ResponseEntity<List<GetCustomerResponse>> getCustomerResponseList() {
+    return ResponseEntity.ok().body(customerService.getCustomerResponseList());
   }
 
 

@@ -1,6 +1,7 @@
 package qlks_hdv.controller;
 
 
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +51,11 @@ public class StaffController {
   public ResponseEntity<GetStaffResponse> getStaffResponse(
       @PathVariable("staffId") Integer staffId) {
     return ResponseEntity.ok().body(staffService.getGetStaffResponse(staffId));
+  }
+
+  @GetMapping
+  public ResponseEntity<List<GetStaffResponse>> getStaffResponseList() {
+    return ResponseEntity.ok().body(staffService.getStaffList());
   }
 
 }
