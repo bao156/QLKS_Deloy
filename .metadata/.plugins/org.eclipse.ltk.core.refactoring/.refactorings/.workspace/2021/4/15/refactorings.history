@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;news-spring-boot&apos;" deleteContents="false" description="Delete resource &apos;news-spring-boot&apos;" element1="/news-spring-boot" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1618041081028"/>
-</session>
