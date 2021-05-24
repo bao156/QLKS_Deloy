@@ -1,6 +1,6 @@
 package qlks_hdv.mapper;
 
-import javax.annotation.Generated;
+import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 import qlks_hdv.entity.Role;
 import qlks_hdv.entity.User;
@@ -10,7 +10,7 @@ import qlks_hdv.response.GetUserResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-05-24T12:59:51+0700",
+    date = "2021-05-24T13:13:45+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
