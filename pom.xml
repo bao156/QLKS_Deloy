@@ -99,8 +99,9 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <source>${maven.compiler.release}</source>
-          <target>${maven.compiler.release}</target>
+          <source>1.8</source>
+          <target>1.8</target>
+          <verbose>true</verbose>
           <annotationProcessorPaths>
             <path>
               <groupId>org.projectlombok</groupId>
