@@ -18,7 +18,6 @@
     <java.version>1.8</java.version>
     <mapstruct.version>1.4.2.Final</mapstruct.version>
     <lombok.version>1.18.18</lombok.version>
-    <maven.compiler.release>15</maven.compiler.release>
   </properties>
 
   <dependencies>
