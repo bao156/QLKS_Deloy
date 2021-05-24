@@ -1,0 +1,73 @@
+package com.qlks_hdv.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.qlks_hdv.converter.StaffConverting;
+import com.qlks_hdv.dto.StaffDTO;
+import com.qlks_hdv.entity.Staff;
+import com.qlks_hdv.entity.User;
+import com.qlks_hdv.repository.StaffRepository;
+import com.qlks_hdv.repository.UserRepository;
+import com.qlks_hdv.service.IStaffService;
+
+@Service
+public class StaffService implements IStaffService{
+	
+	@Autowired
+	private StaffRepository staffRepo;
+	
+	@Autowired
+	private StaffConverting staffConvert;
+	
+	@Autowired
+	private UserRepository userRepo;
+	
+
+	@Override
+	public StaffDTO save(StaffDTO staffDTO)
+	{
+		boolean check=true;
+		Staff staff=new Staff();
+		if(staffDTO.getId()!=null)
+		{
+			Staff staffUpdate=new Staff();
+			int idtemp=staffDTO.getId();
+		//	staff=staffRepo.findOne(staffDTO.getId());
+			
+			if(staff==null)
+			{
+				check=false;
+				
+			}
+			else
+			{
+				staff=staffConvert.toEntity(staffDTO);
+				staff.setId(idtemp);
+			}
+			
+		}
+		else
+		{
+			staff=staffConvert.toEntity(staffDTO);
+		}
+		if(check==true)
+		{
+			User username=new User();
+			username=userRepo.getOne(staffDTO.getUsername());
+			staff.setUser(username);
+			staffRepo.save(staff);
+			return staffDTO;
+		}
+		return null;
+	}
+	
+	@Override
+	public Staff findOneById(Integer id)
+	{
+		//return staffRepo.findOne(id);
+		Staff a=new Staff();
+		return a;
+	}
+
+}

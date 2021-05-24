@@ -1,0 +1,10 @@
+package com.qlks_hdv.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.qlks_hdv.entity.BookingDetail;
+import com.qlks_hdv.entity.compositekey.BookingCompositeKey;
+
+public interface BookingRepository extends JpaRepository<BookingDetail, BookingCompositeKey> {
+	
+}

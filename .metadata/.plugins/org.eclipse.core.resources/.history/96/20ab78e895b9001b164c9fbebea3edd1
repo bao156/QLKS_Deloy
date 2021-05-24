@@ -1,0 +1,29 @@
+package com.qlks_hdv.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.qlks_hdv.converter.BookingConverting;
+import com.qlks_hdv.dto.BookingDTO;
+import com.qlks_hdv.entity.BookingDetail;
+import com.qlks_hdv.repository.BookingRepository;
+import com.qlks_hdv.service.IBookingService;
+
+@Service
+public class BookingService implements IBookingService{
+
+	
+	@Autowired
+	private BookingRepository bookingRepo;
+	
+	@Autowired
+	private BookingConverting bookingConvert;
+	
+	public BookingDTO save(BookingDTO bookingDTO)
+	{
+		BookingDetail booking=new BookingDetail();
+		booking=bookingConvert.toEntity(bookingDTO, booking);
+		bookingRepo.save(booking);
+		return bookingDTO;
+	}
+}

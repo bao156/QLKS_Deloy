@@ -1,0 +1,10 @@
+package com.qlks_hdv.service;
+
+import com.qlks_hdv.dto.StaffDTO;
+import com.qlks_hdv.entity.Staff;
+
+public interface IStaffService {
+
+	StaffDTO save(StaffDTO staffDTO);
+	Staff findOneById(Integer id);
+}

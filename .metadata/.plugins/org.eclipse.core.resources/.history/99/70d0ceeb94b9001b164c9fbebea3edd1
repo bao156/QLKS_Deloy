@@ -1,0 +1,90 @@
+package com.qlks_hdv.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.qlks_hdv.entity.compositekey.RentingCompositeKey;
+
+@Entity
+@Table(name="Renting")
+//@IdClass(RentingCompositeKey.class)
+public class Renting implements Serializable{
+	
+	@Id
+	@Column(name="bookingcard_id")
+	private Integer bookingcardId;
+	
+	@Id
+	@Column(name="room_code")
+	private String roomCode;
+	
+	@Column(name="rent_at")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private String rentAt;
+	
+	@Column(name="back_at")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private String backAt;
+	
+	@ManyToOne
+	@JoinColumn(name="staff_id")
+	private Staff staff;
+
+	public Renting() {
+		super();
+	}
+
+	public Integer getBookingcardId() {
+		return bookingcardId;
+	}
+
+	public void setBookingcardId(Integer bookingcardId) {
+		this.bookingcardId = bookingcardId;
+	}
+
+	public String getRoomCode() {
+		return roomCode;
+	}
+
+	public void setRoomCode(String roomCode) {
+		this.roomCode = roomCode;
+	}
+
+	public String getRentAt() {
+		return rentAt;
+	}
+
+	public void setRentAt(String rentAt) {
+		this.rentAt = rentAt;
+	}
+
+	public String getBackAt() {
+		return backAt;
+	}
+
+	public void setBackAt(String backAt) {
+		this.backAt = backAt;
+	}
+
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
+	}
+	
+	
+	
+	
+	
+}
