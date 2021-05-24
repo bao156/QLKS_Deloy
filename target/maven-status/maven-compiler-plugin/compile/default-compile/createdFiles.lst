@@ -1,3 +1,4 @@
+qlks_hdv\controller\ServiceController.class
 qlks_hdv\mapper\RoomMapper.class
 qlks_hdv\request\UpdateStaffRequest.class
 qlks_hdv\Application.class
@@ -13,6 +14,8 @@ qlks_hdv\controller\CustomerController.class
 qlks_hdv\exception\NotFoundException.class
 qlks_hdv\entity\Hotel.class
 qlks_hdv\request\UpdateUserRequest.class
+qlks_hdv\service\impl\ServicesService.class
+qlks_hdv\service\IService.class
 qlks_hdv\entity\User.class
 qlks_hdv\mapper\CustomerMapperImpl.class
 qlks_hdv\entity\BookingCard.class
@@ -54,6 +57,7 @@ qlks_hdv\response\GetServiceResponse.class
 qlks_hdv\service\impl\StaffService.class
 qlks_hdv\service\IUserService.class
 qlks_hdv\mapper\StaffMapper.class
+qlks_hdv\repository\ServiceRepository.class
 qlks_hdv\service\impl\UserService.class
 qlks_hdv\entity\Staff.class
 qlks_hdv\repository\RoomTypeRepository.class
