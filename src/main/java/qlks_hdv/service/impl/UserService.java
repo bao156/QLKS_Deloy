@@ -1,7 +1,10 @@
 package qlks_hdv.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import qlks_hdv.entity.Role;
 import qlks_hdv.entity.User;
@@ -14,6 +17,8 @@ import qlks_hdv.request.CreateUserRequest;
 import qlks_hdv.request.UpdateUserRequest;
 import qlks_hdv.response.GetUserResponse;
 import qlks_hdv.service.IUserService;
+import qlks_hdv.specification.UserCriteria;
+import qlks_hdv.specification.UserSpecifications;
 
 @Service
 @RequiredArgsConstructor
@@ -63,6 +68,17 @@ public class UserService implements IUserService {
         .orElseThrow(() -> new NotFoundException("user-not-found"));
     return userMapper.mapToGetUserResponse(user,
         roleRepository.findById(user.getRoles().getId()).get().getRoleName());
+  }
+
+  @Override
+  public List<GetUserResponse> getAll(UserCriteria userCriteria) {
+    Specification<User>
+        specification = UserSpecifications.getFilter(userCriteria);
+    List<User> userList = userRepository.findAll(specification);
+    List<GetUserResponse> getUserResponseList = userList.stream()
+        .map(user -> userMapper.mapToGetUserResponse(user, user.getRoles().getRoleName())).collect(
+            Collectors.toList());
+    return getUserResponseList;
   }
 
 }

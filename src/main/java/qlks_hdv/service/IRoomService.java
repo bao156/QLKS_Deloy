@@ -15,5 +15,7 @@ public interface IRoomService {
 
   List<GetRoomResponse> getAllRoomsByStatus(String status);
 
+  List<GetRoomResponse> getAllRooms();
+
 
 }
