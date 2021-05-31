@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import qlks_hdv.entity.Room;
 import qlks_hdv.entity.RoomType;
@@ -68,5 +71,19 @@ public class RoomService implements IRoomService {
     List<GetRoomResponse> getRoomReponseList = roomList.stream()
         .map(develop -> roomMapper.mapToGetRoomResponse(develop)).collect(Collectors.toList());
     return getRoomReponseList;
+  }
+
+  @Override
+  public List<GetRoomResponse> getAllRooms() {
+    int pageNum = 1;
+    int pageSize = 5;
+
+    Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("roomCode").descending());
+
+    List<Room> roomList = roomRepostiory.findAllBy(pageable);
+    List<GetRoomResponse> getRoomReponseList = roomList.stream()
+        .map(develop -> roomMapper.mapToGetRoomResponse(develop)).collect(Collectors.toList());
+    return getRoomReponseList;
+
   }
 }

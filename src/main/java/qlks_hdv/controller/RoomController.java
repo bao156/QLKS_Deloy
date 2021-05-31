@@ -50,5 +50,10 @@ public class RoomController {
     return ResponseEntity.ok().body(roomService.getAllRoomsByStatus(status));
   }
 
+  @GetMapping
+  public ResponseEntity<List<GetRoomResponse>> getAllRooms() {
+    return ResponseEntity.ok().body(roomService.getAllRooms());
+  }
+
 
 }
