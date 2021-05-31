@@ -1,0 +1,56 @@
+<head>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../js/utils.js">
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-side">
+            <div class="sidebar" id="sidebar">
+                <a href="" style="font-size: 17px;">user_name</a>
+                <a class="" onclick="showForm('manage-user')" id="btn-manage-user"><i class="fa fa-user"
+                        aria-hidden="true"></i></a>
+                <a onclick="showForm('booking')" id="btn-booking"><i class="fa fa-calendar" aria-hidden="true"></i></a>
+                <a href="#contact"><i class="fa fa-pie-chart" aria-hidden="true"></i></a>
+                <!-- <a href="#about">About</a> -->
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="content" id="content">
+                <!--Start: Timeline-->
+
+                <!--Start: Manage User-->
+                <div id="manage-user" style="display: none;">
+                    <!-- <div class="nav-top">
+                        <a class="active" id="btn-schedual" onclick="toggleForm('schedual')">SCHEDUAL</a>
+                        <a class="" id="btn-rooms" onclick="toggleForm('rooms')">ROOMS</a>
+                    </div>
+                    <hr class="solid"> -->
+                    <div class="">
+                        <iframe src="user-manager-table.html" frameBorder="0" scrolling="no" title="" height="100%" width="100%"
+                            id="user-manager-table"></iframe>
+                    </div>
+                </div>
+                <!--End: Manage User-->
+                <!--Start: Booking-->
+                <div id="booking" style="display: none;">
+                    <div class="nav-top">
+                        <a class="active" id="btn-schedual" onclick="toggleForm('schedual')">SCHEDUAL</a>
+                        <a class="" id="btn-rooms" onclick="toggleForm('rooms')">ROOMS</a>
+                    </div>
+                    <hr class="solid">
+                    <div class="">
+                        <iframe src="calender.html" title="descrption" height="90%" width="100%" id="schedual"></iframe>
+                        <iframe src="rooms.html" title="" height="90%" width="100%" id="rooms"></iframe>
+                    </div>
+                </div>
+                <!--End: Booking-->
+
+                <!--End: Timeline-->
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,14 @@
+{
+  "name": "syncscroll",
+  "homepage": "https://github.com/asvd/syncscroll",
+  "version": "0.0.3",
+  "_release": "0.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.3",
+    "commit": "5769c068038eb42ca323ef38743d2c19001c935a"
+  },
+  "_source": "https://github.com/asvd/syncscroll.git",
+  "_target": "^0.0.3",
+  "_originalSource": "syncscroll"
+}

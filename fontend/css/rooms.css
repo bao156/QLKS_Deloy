@@ -1,0 +1,23 @@
+.column {
+    float: left;
+    width: 49%;
+    height: 100px;
+    /* Should be removed. Only for demonstration */
+}
+
+.left {
+    width: 60%
+}
+
+.right {
+    width: 40%;
+}
+
+
+/* Clear floats after the columns */
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

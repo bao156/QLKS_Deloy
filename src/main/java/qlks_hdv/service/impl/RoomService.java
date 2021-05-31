@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import qlks_hdv.entity.Room;
 import qlks_hdv.entity.RoomType;
 import qlks_hdv.exception.ConflictException;
@@ -61,6 +62,7 @@ public class RoomService implements IRoomService {
   }
 
   @Override
+  @CrossOrigin("*")
   public List<GetRoomResponse> getAllRoomsByStatus(String status) {
     List<Room> roomList = roomRepostiory.getAllByStatus(status)
         .orElseThrow(() -> new NotFoundException("no-room-is-empty"));

@@ -10,8 +10,8 @@ import qlks_hdv.response.GetRoomResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-05-24T20:59:49+0700",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
+    date = "2021-05-29T15:19:38+0700",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15.0.2 (Oracle Corporation)"
 )
 @Component
 public class RoomMapperImpl implements RoomMapper {
