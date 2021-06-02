@@ -7,11 +7,12 @@ import qlks_hdv.entity.RoomType;
 import qlks_hdv.request.CreateRoomRequest;
 import qlks_hdv.request.UpdateRoomRequest;
 import qlks_hdv.response.GetRoomResponse;
+import qlks_hdv.response.GetRoomResponseWithPrice;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-05-29T15:19:38+0700",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15.0.2 (Oracle Corporation)"
+    date = "2021-06-02T14:41:25+0700",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
 public class RoomMapperImpl implements RoomMapper {
@@ -66,6 +67,28 @@ public class RoomMapperImpl implements RoomMapper {
         getRoomResponse.setImage( room.getImage() );
 
         return getRoomResponse;
+    }
+
+    @Override
+    public GetRoomResponseWithPrice mapToGetRoomResponseWithPrice(Room room, Integer price) {
+        if ( room == null && price == null ) {
+            return null;
+        }
+
+        GetRoomResponseWithPrice getRoomResponseWithPrice = new GetRoomResponseWithPrice();
+
+        if ( room != null ) {
+            getRoomResponseWithPrice.setNumberOfBed( roomTypeNumberOfBed( room ) );
+            getRoomResponseWithPrice.setRoomCode( room.getRoomCode() );
+            getRoomResponseWithPrice.setStatus( room.getStatus() );
+            getRoomResponseWithPrice.setDescription( room.getDescription() );
+            getRoomResponseWithPrice.setImage( room.getImage() );
+        }
+        if ( price != null ) {
+            getRoomResponseWithPrice.setPrice( price );
+        }
+
+        return getRoomResponseWithPrice;
     }
 
     private Integer roomTypeNumberOfBed(Room room) {

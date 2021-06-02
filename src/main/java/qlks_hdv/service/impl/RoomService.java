@@ -1,24 +1,26 @@
 package qlks_hdv.service.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import qlks_hdv.entity.Price;
 import qlks_hdv.entity.Room;
 import qlks_hdv.entity.RoomType;
+import qlks_hdv.entity.compositekey.PriceId;
 import qlks_hdv.exception.ConflictException;
 import qlks_hdv.exception.NotFoundException;
 import qlks_hdv.mapper.RoomMapper;
+import qlks_hdv.repository.PricesRepository;
 import qlks_hdv.repository.RoomRepostiory;
 import qlks_hdv.repository.RoomTypeRepository;
 import qlks_hdv.request.CreateRoomRequest;
 import qlks_hdv.request.UpdateRoomRequest;
 import qlks_hdv.response.GetRoomResponse;
+import qlks_hdv.response.GetRoomResponseWithPrice;
 import qlks_hdv.service.IRoomService;
 
 @Service
@@ -26,6 +28,8 @@ import qlks_hdv.service.IRoomService;
 public class RoomService implements IRoomService {
 
   private final RoomRepostiory roomRepostiory;
+
+  private final PricesRepository pricesRepository;
 
   private final RoomMapper roomMapper;
 
@@ -65,7 +69,6 @@ public class RoomService implements IRoomService {
   }
 
   @Override
-  @CrossOrigin("*")
   public List<GetRoomResponse> getAllRoomsByStatus(String status) {
     List<Room> roomList = roomRepostiory.getAllByStatus(status)
         .orElseThrow(() -> new NotFoundException("no-room-is-empty"));
@@ -75,17 +78,18 @@ public class RoomService implements IRoomService {
     return getRoomReponseList;
   }
 
-  @Override
-  public List<GetRoomResponse> getAllRooms() {
-    int pageNum = 1;
-    int pageSize = 5;
+  public GetRoomResponseWithPrice getRoomDetail(String roomCode) {
+    Room room = roomRepostiory.findById(roomCode)
+        .orElseThrow(() -> new NotFoundException("room-not-exist"));
+    Date now = new Date();
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(now);
+    int date = cal.get(Calendar.DAY_OF_WEEK);
+    boolean isWeekend = (date == 7 || date == 1) ? true : false;
 
-    Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("roomCode").descending());
-
-    List<Room> roomList = roomRepostiory.findAllBy(pageable);
-    List<GetRoomResponse> getRoomReponseList = roomList.stream()
-        .map(develop -> roomMapper.mapToGetRoomResponse(develop)).collect(Collectors.toList());
-    return getRoomReponseList;
-
+    PriceId priceId = new PriceId(room.getType().getId(), isWeekend);
+    Price price = pricesRepository.getOne(priceId);
+    return roomMapper
+        .mapToGetRoomResponseWithPrice(room, price.getPrice());
   }
 }

@@ -2,7 +2,6 @@ package qlks_hdv.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +32,7 @@ public class Hotel {
   @Column(name = "logo")
   private String logo;
 
-  @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "hotel")
   private List<Role> roles = new ArrayList<>();
 
 }

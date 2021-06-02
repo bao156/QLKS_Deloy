@@ -9,6 +9,7 @@ import qlks_hdv.entity.RoomType;
 import qlks_hdv.request.CreateRoomRequest;
 import qlks_hdv.request.UpdateRoomRequest;
 import qlks_hdv.response.GetRoomResponse;
+import qlks_hdv.response.GetRoomResponseWithPrice;
 
 @Mapper(componentModel = "spring")
 public interface RoomMapper {
@@ -23,5 +24,11 @@ public interface RoomMapper {
 
   @Mapping(target = "numberOfBed", source = "type.numberOfBed")
   GetRoomResponse mapToGetRoomResponse(Room room);
+
+  @Mappings({
+      @Mapping(target = "numberOfBed", source = " room.type.numberOfBed"),
+      @Mapping(target = "price", source = "price")
+  })
+  GetRoomResponseWithPrice mapToGetRoomResponseWithPrice(Room room, Integer price);
 
 }

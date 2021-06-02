@@ -1,3 +1,4 @@
+qlks_hdv\entity\compositekey\PriceId.class
 qlks_hdv\controller\ServiceController.class
 qlks_hdv\mapper\RoomMapper.class
 qlks_hdv\request\UpdateStaffRequest.class
@@ -39,12 +40,14 @@ qlks_hdv\entity\RoomType.class
 qlks_hdv\repository\RoomRepostiory.class
 qlks_hdv\request\UpdateCustomerRequest.class
 qlks_hdv\service\ICustomerService.class
+qlks_hdv\entity\Price.class
 qlks_hdv\response\GetBookingCardReponse.class
 qlks_hdv\entity\Room.class
 qlks_hdv\mapper\StaffMapperImpl.class
 qlks_hdv\repository\RoleRepository.class
 qlks_hdv\response\ErrorResponse.class
 qlks_hdv\entity\Customer.class
+qlks_hdv\response\GetRoomResponseWithPrice.class
 qlks_hdv\request\CreateStaffRequest.class
 qlks_hdv\exception\ConflictException.class
 qlks_hdv\service\IBookingCardService.class

@@ -20,6 +20,4 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
   Boolean existsByEmail(String email);
 
   Optional<List<Staff>> getAllBy();
-
-
 }
