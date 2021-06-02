@@ -9,6 +9,6 @@ public class GetCustomerResponse {
   private String lastName;
   private String phone;
   private String email;
-  private String username;
+  private String username;  
 
 }

@@ -15,7 +15,5 @@ public interface ICustomerService {
 
   GetCustomerResponse getCustomerByUsername(String username);
 
-  GetCustomerResponse getCustomerByCustomerId(Integer customerId);
-
   List<GetCustomerResponse> getCustomerResponseList();
 }

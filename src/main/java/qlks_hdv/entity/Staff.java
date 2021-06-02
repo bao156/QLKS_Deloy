@@ -38,8 +38,8 @@ public class Staff {
   @Column(name = "address")
   private String address;
 
-  @OneToOne(cascade = CascadeType.REMOVE)
-  @JoinColumn(name = "username", referencedColumnName = "username")
+  @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+  @JoinColumn(name = "username")
   private User user;
 
 //  @OneToMany(mappedBy = "staff")

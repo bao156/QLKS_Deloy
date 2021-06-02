@@ -67,17 +67,6 @@ public class CustomerService implements ICustomerService {
 
     Customer customer = customerRepository.findByUserUsername(username)
         .orElseThrow(() -> new NotFoundException("customer-not-found"));
-
-    return customerMapper.mapToGetCustomerResponse(customer, customer.getUser().getUsername());
-
-  }
-
-  @Override
-  public GetCustomerResponse getCustomerByCustomerId(Integer customerId) {
-
-    Customer customer = customerRepository.findById(customerId)
-        .orElseThrow(() -> new NotFoundException("customer-not-found"));
-
     return customerMapper.mapToGetCustomerResponse(customer, customer.getUser().getUsername());
 
   }

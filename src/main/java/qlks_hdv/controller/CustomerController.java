@@ -42,8 +42,8 @@ public class CustomerController {
 
   @GetMapping("/{customerId}")
   public ResponseEntity<GetCustomerResponse> getCustomerByCustomerId(
-      @PathVariable("customerId") Integer customerId) {
-    return ResponseEntity.ok().body(customerService.getCustomerByCustomerId(customerId));
+      @PathVariable("customerId") String username) {
+    return ResponseEntity.ok().body(customerService.getCustomerByUsername(username));
   }
 
   @DeleteMapping("/{customerId}")

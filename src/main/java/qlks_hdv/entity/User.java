@@ -1,6 +1,5 @@
 package qlks_hdv.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,7 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,9 +27,9 @@ public class User {
   @JoinColumn(name = "role_id")
   private Role roles;
 
-//  @OneToOne(mappedBy = "user")
-//  private Staff staff;
-//
+  @OneToOne(mappedBy = "user")
+  private Staff staff;
+
   @OneToOne(mappedBy = "user")
   private Customer customer;
 
