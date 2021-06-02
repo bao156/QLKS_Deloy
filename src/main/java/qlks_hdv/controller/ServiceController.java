@@ -3,6 +3,7 @@ package qlks_hdv.controller;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import qlks_hdv.request.CreateServiceRequest;
 import qlks_hdv.request.UpdateServiceRequest;
 import qlks_hdv.service.impl.ServicesService;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequiredArgsConstructor
 @RequestMapping("api/services")
 @RestController

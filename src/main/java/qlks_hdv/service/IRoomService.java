@@ -4,6 +4,7 @@ import java.util.List;
 import qlks_hdv.request.CreateRoomRequest;
 import qlks_hdv.request.UpdateRoomRequest;
 import qlks_hdv.response.GetRoomResponse;
+import qlks_hdv.response.GetRoomResponseWithPrice;
 
 public interface IRoomService {
 
@@ -15,5 +16,6 @@ public interface IRoomService {
 
   List<GetRoomResponse> getAllRoomsByStatus(String status);
 
+  GetRoomResponseWithPrice getRoomDetail(String roomCode);
 
 }
