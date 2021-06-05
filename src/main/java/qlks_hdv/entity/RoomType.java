@@ -25,6 +25,12 @@ public class RoomType {
   @Column(name = "number_of_bed")
   private Integer numberOfBed;
 
+  @Column(name = "name")
+  private String name;
+
+  @Column(name = "desciption")
+  private String desciption;
+
   @OneToMany(mappedBy = "type")
   private List<Room> room;
 

@@ -46,7 +46,7 @@ public class RoomService implements IRoomService {
     RoomType type = roomTypeRepository.findOneByNumberOfBed(createRoomRequest.getNumberOfBed())
         .orElseThrow(() -> new NotFoundException("type-not-found"));
 
-    Room room = roomMapper.mapToRoom(createRoomRequest, "Empty", type);
+    Room room = roomMapper.mapToRoom(createRoomRequest, type);
     roomRepostiory.save(room);
 
   }
@@ -81,6 +81,7 @@ public class RoomService implements IRoomService {
   public GetRoomResponseWithPrice getRoomDetail(String roomCode) {
     Room room = roomRepostiory.findById(roomCode)
         .orElseThrow(() -> new NotFoundException("room-not-exist"));
+
     Date now = new Date();
     Calendar cal = Calendar.getInstance();
     cal.setTime(now);

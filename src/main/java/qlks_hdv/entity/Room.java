@@ -19,9 +19,6 @@ public class Room {
   @Column(name = "code")
   private String roomCode;
 
-  @Column(name = "status")
-  private String status;
-
   @Column(name = "description")
   private String description;
 

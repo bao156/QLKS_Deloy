@@ -1,10 +1,13 @@
 qlks_hdv\entity\compositekey\PriceId.class
 qlks_hdv\controller\ServiceController.class
 qlks_hdv\mapper\RoomMapper.class
+qlks_hdv\service\impl\RoomTypeService.class
 qlks_hdv\request\UpdateStaffRequest.class
+qlks_hdv\controller\RoomTypeController.class
 qlks_hdv\Application.class
 qlks_hdv\exception\BadRequestException.class
 qlks_hdv\service\IStaffService.class
+qlks_hdv\mapper\RoomTypeMapperImpl.class
 qlks_hdv\response\GetUserResponse.class
 qlks_hdv\entity\Services.class
 qlks_hdv\mapper\CustomerMapper.class
@@ -24,6 +27,7 @@ qlks_hdv\repository\DiscountRepository.class
 qlks_hdv\util\DateUtils.class
 qlks_hdv\controller\RoomController.class
 qlks_hdv\mapper\BookingCardMapperImpl.class
+qlks_hdv\repository\PricesRepository.class
 qlks_hdv\controller\UserController.class
 qlks_hdv\exception\handler\ExceptionHandlerAdvice.class
 qlks_hdv\service\impl\BookingCardService.class
@@ -31,6 +35,7 @@ qlks_hdv\entity\Role.class
 qlks_hdv\request\CreateUserRequest.class
 qlks_hdv\response\GetCustomerResponse.class
 qlks_hdv\request\CreateServiceRequest.class
+qlks_hdv\mapper\RoomTypeMapper.class
 qlks_hdv\request\UpdateRoomRequest.class
 qlks_hdv\response\ErrorResponse$ErrorResponseBuilder.class
 qlks_hdv\request\CreateBookingCardRequest.class
@@ -39,6 +44,7 @@ qlks_hdv\repository\UserRepository.class
 qlks_hdv\entity\RoomType.class
 qlks_hdv\repository\RoomRepostiory.class
 qlks_hdv\request\UpdateCustomerRequest.class
+qlks_hdv\response\GetRoomTypeWithPriceResponse.class
 qlks_hdv\service\ICustomerService.class
 qlks_hdv\entity\Price.class
 qlks_hdv\response\GetBookingCardReponse.class
@@ -51,6 +57,7 @@ qlks_hdv\response\GetRoomResponseWithPrice.class
 qlks_hdv\request\CreateStaffRequest.class
 qlks_hdv\exception\ConflictException.class
 qlks_hdv\service\IBookingCardService.class
+qlks_hdv\service\IRoomTypeService.class
 qlks_hdv\request\CreateCustomerRequest.class
 qlks_hdv\mapper\ServiceMapperImpl.class
 qlks_hdv\repository\StaffRepository.class

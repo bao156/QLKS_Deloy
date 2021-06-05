@@ -10,8 +10,6 @@ public class GetRoomResponse {
 
   private Integer numberOfBed;
 
-  private String status;
-
   private String description;
 
   private String image;

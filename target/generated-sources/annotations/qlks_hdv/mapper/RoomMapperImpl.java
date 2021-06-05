@@ -11,15 +11,15 @@ import qlks_hdv.response.GetRoomResponseWithPrice;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-02T17:27:05+0700",
+    date = "2021-06-05T15:33:57+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
 public class RoomMapperImpl implements RoomMapper {
 
     @Override
-    public Room mapToRoom(CreateRoomRequest createRoomRequest, String status, RoomType type) {
-        if ( createRoomRequest == null && status == null && type == null ) {
+    public Room mapToRoom(CreateRoomRequest createRoomRequest, RoomType type) {
+        if ( createRoomRequest == null && type == null ) {
             return null;
         }
 
@@ -29,9 +29,6 @@ public class RoomMapperImpl implements RoomMapper {
             room.setRoomCode( createRoomRequest.getRoomCode() );
             room.setDescription( createRoomRequest.getDescription() );
             room.setImage( createRoomRequest.getImage() );
-        }
-        if ( status != null ) {
-            room.setStatus( status );
         }
         if ( type != null ) {
             room.setType( type );
@@ -62,7 +59,6 @@ public class RoomMapperImpl implements RoomMapper {
 
         getRoomResponse.setNumberOfBed( roomTypeNumberOfBed( room ) );
         getRoomResponse.setRoomCode( room.getRoomCode() );
-        getRoomResponse.setStatus( room.getStatus() );
         getRoomResponse.setDescription( room.getDescription() );
         getRoomResponse.setImage( room.getImage() );
 
@@ -80,7 +76,6 @@ public class RoomMapperImpl implements RoomMapper {
         if ( room != null ) {
             getRoomResponseWithPrice.setNumberOfBed( roomTypeNumberOfBed( room ) );
             getRoomResponseWithPrice.setRoomCode( room.getRoomCode() );
-            getRoomResponseWithPrice.setStatus( room.getStatus() );
             getRoomResponseWithPrice.setDescription( room.getDescription() );
             getRoomResponseWithPrice.setImage( room.getImage() );
         }

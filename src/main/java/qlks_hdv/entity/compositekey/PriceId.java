@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class PriceId implements Serializable {
 
   private Integer typeId;
-
   private Boolean isWeekend;
 
 }
