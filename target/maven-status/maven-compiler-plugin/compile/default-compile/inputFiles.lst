@@ -20,6 +20,7 @@ E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\request\CreateS
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\response\GetUserResponse.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\repository\BookingDetailRepository.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\response\GetBookingDetailResponse.java
+E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\response\GetServiceDetailResponse.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\controller\ServiceDetailController.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\mapper\UserMapper.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\service\IBookingDetailService.java

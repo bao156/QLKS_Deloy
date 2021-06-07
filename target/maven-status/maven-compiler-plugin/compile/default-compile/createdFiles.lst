@@ -65,6 +65,7 @@ qlks_hdv\mapper\CustomerMapperImpl.class
 qlks_hdv\mapper\BookingDetailMapperImpl.class
 qlks_hdv\response\GetBookingDetailResponse.class
 qlks_hdv\controller\ServiceDetailController.class
+qlks_hdv\response\GetServiceDetailResponse.class
 qlks_hdv\mapper\BookingCardMapperImpl.class
 qlks_hdv\exception\handler\ExceptionHandlerAdvice.class
 qlks_hdv\service\impl\BookingCardService.class

@@ -1,5 +1,7 @@
 package qlks_hdv.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import qlks_hdv.repository.ServiceDetailRepository;
 import qlks_hdv.repository.ServiceRepository;
 import qlks_hdv.request.CreateBookingCardRequest;
 import qlks_hdv.request.CreateServiceDetailRequest;
+import qlks_hdv.response.GetServiceDetailResponse;
 import qlks_hdv.service.IServiceDetail;
 
 @Data
@@ -31,13 +34,13 @@ public class ServiceDetailService implements IServiceDetail {
   @Transactional
   public void addServiceDetail(CreateServiceDetailRequest createServiceDetailRequest) {
 
-    if (!bookingCardRepository.existsBookingCardByStatusAndCustomerUserUsername("Reservated",
+    if (!bookingCardRepository.existsBookingCardByStatusAndCustomerUserUsername("Processing",
         createServiceDetailRequest.getUsername())) {
       bookingCardService.createBookingCard(
           new CreateBookingCardRequest(createServiceDetailRequest.getUsername(), ""));
     }
     BookingCard bookingCard = bookingCardRepository
-        .findBookingCardByStatusAndCustomerUserUsername("Reservated",
+        .findBookingCardByStatusAndCustomerUserUsername("Processing",
             createServiceDetailRequest.getUsername())
         .orElseThrow(() -> new NotFoundException("booking-card-not-found"));
 
@@ -49,4 +52,24 @@ public class ServiceDetailService implements IServiceDetail {
         .mapToServiceDetail(createServiceDetailRequest, bookingCard, service);
     serviceDetailRepository.save(serviceDetail);
   }
+
+  @Override
+  public List<GetServiceDetailResponse> getServiceDetailResponseList(Integer bookingId,
+      String username) {
+
+    if (bookingId == 0) {
+      BookingCard bookingCard = bookingCardRepository
+          .findBookingCardByStatusAndCustomerUserUsername("Processing", username)
+          .orElseThrow(() -> new NotFoundException("booking-not-exist"));
+      bookingId = bookingCard.getBookingId();
+    }
+
+    List<ServiceDetail> serviceDetailList = serviceDetailRepository
+        .findAllByBookingCardBookingId(bookingId);
+
+    return serviceDetailList.stream()
+        .map(detail -> serviceDetailMapper.mapToServiceDetailResponse(detail))
+        .collect(Collectors.toList());
+  }
+
 }

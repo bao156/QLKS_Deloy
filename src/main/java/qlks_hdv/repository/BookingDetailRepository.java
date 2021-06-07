@@ -9,4 +9,5 @@ public interface BookingDetailRepository extends JpaRepository<BookingDetail, Bo
 
   List<BookingDetail> findAllByBookingCardBookingId(Integer bookingId);
 
+
 }

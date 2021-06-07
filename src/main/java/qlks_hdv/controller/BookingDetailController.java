@@ -30,11 +30,11 @@ public class BookingDetailController {
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping("{bookingId}")
+  @GetMapping("/{username}/{bookingId}")
   public ResponseEntity<List<GetBookingDetailResponse>> getBookingDetails(
-      @Valid @PathVariable("bookingId") Integer bookingId) {
+      @PathVariable("bookingId") Integer bookingId, @PathVariable("username") String username) {
     return ResponseEntity.ok()
-        .body(bookingDetailService.gettBookingDetailByBookingCardId(bookingId));
+        .body(bookingDetailService.getBookingDetailByBookingCardId(bookingId, username));
   }
 
 }

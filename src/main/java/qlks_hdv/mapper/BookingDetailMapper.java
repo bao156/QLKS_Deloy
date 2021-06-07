@@ -19,7 +19,8 @@ public interface BookingDetailMapper {
       BookingCard bookingCard, RoomType roomType);
 
   @Mappings({
-      @Mapping(target = "nameType", source = "bookingDetail.type.name")
+      @Mapping(target = "nameType", source = "bookingDetail.type.name"),
+      @Mapping(target = "numberOfBed", source = "bookingDetail.type.numberOfBed")
   })
   GetBookingDetailResponse mapToGetBookingDetailResponse(BookingDetail bookingDetail);
 }

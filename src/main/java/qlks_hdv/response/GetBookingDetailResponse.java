@@ -7,6 +7,8 @@ public class GetBookingDetailResponse {
 
   private String nameType;
 
+  private Integer numberOfBed;
+
   private String recieveAt;
 
   private String backAt;

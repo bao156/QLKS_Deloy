@@ -6,10 +6,11 @@ import qlks_hdv.entity.BookingCard;
 import qlks_hdv.entity.ServiceDetail;
 import qlks_hdv.entity.Services;
 import qlks_hdv.request.CreateServiceDetailRequest;
+import qlks_hdv.response.GetServiceDetailResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-07T12:34:52+0700",
+    date = "2021-06-07T23:40:46+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
@@ -35,5 +36,35 @@ public class ServiceDetailMapperImpl implements ServiceDetailMapper {
         }
 
         return serviceDetail;
+    }
+
+    @Override
+    public GetServiceDetailResponse mapToServiceDetailResponse(ServiceDetail serviceDetail) {
+        if ( serviceDetail == null ) {
+            return null;
+        }
+
+        GetServiceDetailResponse getServiceDetailResponse = new GetServiceDetailResponse();
+
+        getServiceDetailResponse.setNameService( serviceDetailServiceServiceName( serviceDetail ) );
+        getServiceDetailResponse.setQuantity( serviceDetail.getQuantity() );
+        getServiceDetailResponse.setPrice( serviceDetail.getPrice() );
+
+        return getServiceDetailResponse;
+    }
+
+    private String serviceDetailServiceServiceName(ServiceDetail serviceDetail) {
+        if ( serviceDetail == null ) {
+            return null;
+        }
+        Services service = serviceDetail.getService();
+        if ( service == null ) {
+            return null;
+        }
+        String serviceName = service.getServiceName();
+        if ( serviceName == null ) {
+            return null;
+        }
+        return serviceName;
     }
 }

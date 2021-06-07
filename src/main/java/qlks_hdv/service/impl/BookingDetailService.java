@@ -34,18 +34,18 @@ public class BookingDetailService implements IBookingDetailService {
   @Transactional
   public void addBookingDetail(CreateBookingDetailRequest createBookingDetailRequest) {
 
-    if (!bookingCardRepository.existsBookingCardByStatusAndCustomerUserUsername("Reservated",
+    if (!bookingCardRepository.existsBookingCardByStatusAndCustomerUserUsername("Processing",
         createBookingDetailRequest.getUsername())) {
       bookingCardService.createBookingCard(
           new CreateBookingCardRequest(createBookingDetailRequest.getUsername(), ""));
     }
 
     BookingCard bookingCard = bookingCardRepository
-        .findBookingCardByStatusAndCustomerUserUsername("Reservated",
+        .findBookingCardByStatusAndCustomerUserUsername("Processing",
             createBookingDetailRequest.getUsername())
         .orElseThrow(() -> new NotFoundException("booking-card-not-found"));
 
-    RoomType roomType = roomTypeRepository.findByName(createBookingDetailRequest.getNameType())
+    RoomType roomType = roomTypeRepository.findById(createBookingDetailRequest.getTypeId())
         .orElseThrow(() -> new NotFoundException("roomtype-not-found"));
 
     BookingDetail bookingDetail = bookingDetailMapper
@@ -56,7 +56,16 @@ public class BookingDetailService implements IBookingDetailService {
   }
 
   @Override
-  public List<GetBookingDetailResponse> gettBookingDetailByBookingCardId(Integer bookingId) {
+  public List<GetBookingDetailResponse> getBookingDetailByBookingCardId(Integer bookingId,
+      String username) {
+
+    if (bookingId == 0) {
+      BookingCard bookingCard = bookingCardRepository
+          .findBookingCardByStatusAndCustomerUserUsername("Processing", username)
+          .orElseThrow(() -> new NotFoundException("booking-not-exist"));
+      bookingId = bookingCard.getBookingId();
+    }
+
     List<BookingDetail> bookingDetailList = bookingDetailRepository
         .findAllByBookingCardBookingId(bookingId);
 

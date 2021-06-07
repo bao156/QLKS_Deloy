@@ -8,7 +8,7 @@ public class CreateBookingDetailRequest {
 
   private String username;
 
-  private String nameType;
+  private Integer typeId;
 
   @DateTimeFormat(pattern = "yyyy/mm/dd")
   private String recieveAt;

@@ -8,6 +8,7 @@ public interface IBookingDetailService {
 
   void addBookingDetail(CreateBookingDetailRequest createBookingDetailRequest);
 
-  List<GetBookingDetailResponse> gettBookingDetailByBookingCardId(Integer bookingId);
+  List<GetBookingDetailResponse> getBookingDetailByBookingCardId(Integer bookingId,
+      String username);
 
 }

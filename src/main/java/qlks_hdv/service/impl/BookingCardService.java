@@ -44,7 +44,7 @@ public class BookingCardService implements IBookingCardService {
         .findByDiscountName(createBookingCardRequest.getDiscountName());
 
     BookingCard bookingCard = bookingCardMapper
-        .mapToBookingCard(createBookingCardRequest, 0, "Reservated", customer, discount);
+        .mapToBookingCard(createBookingCardRequest, 0, "Processing", customer, discount);
 
     bookingCardRepository.save(bookingCard);
 
