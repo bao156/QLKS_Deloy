@@ -47,11 +47,11 @@ public class RoomController {
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping("/{status}")
-  public ResponseEntity<List<GetRoomResponse>> getAllRoomsByStatus(
-      @PathVariable("status") String status) {
-    return ResponseEntity.ok().body(roomService.getAllRoomsByStatus(status));
-  }
+//  @GetMapping("/{status}")
+//  public ResponseEntity<List<GetRoomResponse>> getAllRoomsByStatus(
+//      @PathVariable("status") String status) {
+//    return ResponseEntity.ok().body(roomService.getAllRoomsByStatus(status));
+//  }
 
   @GetMapping
   public ResponseEntity<GetRoomResponseWithPrice> getRoomDetail(@RequestParam String roomCode) {

@@ -2,8 +2,6 @@ package qlks_hdv.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +17,6 @@ import qlks_hdv.repository.RoomRepostiory;
 import qlks_hdv.repository.RoomTypeRepository;
 import qlks_hdv.request.CreateRoomRequest;
 import qlks_hdv.request.UpdateRoomRequest;
-import qlks_hdv.response.GetRoomResponse;
 import qlks_hdv.response.GetRoomResponseWithPrice;
 import qlks_hdv.service.IRoomService;
 
@@ -66,16 +63,6 @@ public class RoomService implements IRoomService {
     Room room = roomRepostiory.findById(roomCode)
         .orElseThrow(() -> new NotFoundException("room-not-exist"));
     roomRepostiory.deleteById(roomCode);
-  }
-
-  @Override
-  public List<GetRoomResponse> getAllRoomsByStatus(String status) {
-    List<Room> roomList = roomRepostiory.getAllByStatus(status)
-        .orElseThrow(() -> new NotFoundException("no-room-is-empty"));
-
-    List<GetRoomResponse> getRoomReponseList = roomList.stream()
-        .map(develop -> roomMapper.mapToGetRoomResponse(develop)).collect(Collectors.toList());
-    return getRoomReponseList;
   }
 
   public GetRoomResponseWithPrice getRoomDetail(String roomCode) {

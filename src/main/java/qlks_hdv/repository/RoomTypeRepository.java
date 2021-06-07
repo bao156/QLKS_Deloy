@@ -8,5 +8,6 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Integer> {
 
   Optional<RoomType> findOneByNumberOfBed(Integer number);
 
+  Optional<RoomType> findByName(String name);
 
 }

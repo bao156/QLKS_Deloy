@@ -1,5 +1,7 @@
 package qlks_hdv.service.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import qlks_hdv.mapper.ServiceMapper;
 import qlks_hdv.repository.ServiceRepository;
 import qlks_hdv.request.CreateServiceRequest;
 import qlks_hdv.request.UpdateServiceRequest;
+import qlks_hdv.response.GetServiceResponse;
 import qlks_hdv.service.IService;
 
 @Data
@@ -55,5 +58,14 @@ public class ServicesService implements IService {
         .orElseThrow(() -> new NotFoundException("service-not-found"));
     serviceRepository.deleteById(serviceId);
   }
+
+  @Override
+  public List<GetServiceResponse> getServices() {
+    List<Services> servicesList = serviceRepository.findAll();
+    return servicesList.stream()
+        .map(service -> serviceMapper.mapToGetServiceResponse(service))
+        .collect(Collectors.toList());
+  }
+
 
 }

@@ -14,9 +14,8 @@ import qlks_hdv.entity.compositekey.BookingDetailId;
 
 @Data
 @NoArgsConstructor
-@Entity
+@Entity(name = "Booking_Detail")
 @IdClass(BookingDetailId.class)
-@Table(name = "BookingDetail")
 public class BookingDetail {
 
   @Id
@@ -25,18 +24,22 @@ public class BookingDetail {
   private BookingCard bookingCard;
 
   @Id
-  @Column(name = "type_id")
-  private Integer typeId;
+  @ManyToOne
+  @JoinColumn(name = "type_id",referencedColumnName = "id")
+  private RoomType type;
 
   @Column(name = "recieve_at")
   @DateTimeFormat(pattern = "yyyy/mm/dd")
   private String recieveAt;
 
-  @Column
+  @Column(name = "back_at")
   @DateTimeFormat(pattern = "yyyy/mm/dd")
   private String backAt;
 
   @Column(name = "amount")
   private Integer amount;
+
+  @Column(name = "price")
+  private Integer price;
 
 }

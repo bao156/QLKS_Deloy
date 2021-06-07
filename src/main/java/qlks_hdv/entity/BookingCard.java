@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +40,8 @@ public class BookingCard {
   @JoinColumn(name = "discount_id")
   private Discount discount;
 
-  @OneToMany(mappedBy = "bookingCard", cascade = CascadeType.PERSIST)
-  List<BookingDetail> bookingDetailList;
+  @OneToMany(mappedBy = "bookingCard", fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+  private List<BookingDetail> bookingDetailList;
+
 
 }

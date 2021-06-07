@@ -1,8 +1,10 @@
 package qlks_hdv.entity;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,5 +35,8 @@ public class RoomType {
 
   @OneToMany(mappedBy = "type")
   private List<Room> room;
+
+  @OneToMany(mappedBy = "type", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+  private List<BookingDetail> roomTypeList;
 
 }

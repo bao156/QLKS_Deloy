@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class BookingDetailId implements Serializable {
 
-  private Integer bookingCardId;
-  private Integer typeId;
+  private Integer bookingCard;
+  private Integer type;
 
 }

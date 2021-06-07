@@ -1,10 +1,12 @@
 package qlks_hdv.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import qlks_hdv.request.CreateServiceRequest;
 import qlks_hdv.request.UpdateServiceRequest;
+import qlks_hdv.response.GetServiceResponse;
 import qlks_hdv.service.impl.ServicesService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -44,4 +47,8 @@ public class ServiceController {
     return ResponseEntity.ok().build();
   }
 
+  @GetMapping
+  public ResponseEntity<List<GetServiceResponse>> getServices() {
+    return ResponseEntity.ok().body(servicesService.getServices());
+  }
 }

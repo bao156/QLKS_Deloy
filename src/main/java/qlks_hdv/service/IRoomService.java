@@ -14,7 +14,7 @@ public interface IRoomService {
 
   void deleteRoom(String code);
 
-  List<GetRoomResponse> getAllRoomsByStatus(String status);
+ // List<GetRoomResponse> getAllRoomsByStatus(String status);
 
   GetRoomResponseWithPrice getRoomDetail(String roomCode);
 
