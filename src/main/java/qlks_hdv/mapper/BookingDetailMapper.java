@@ -13,7 +13,9 @@ import qlks_hdv.response.GetBookingDetailResponse;
 public interface BookingDetailMapper {
 
   @Mappings({
-      @Mapping(target = "price", source = "createBookingDetailRequest.price")
+      @Mapping(target = "price", ignore = true),
+      @Mapping(target = "bookingCard", source = "bookingCard"),
+      @Mapping(target = "type", source = "roomType")
   })
   BookingDetail mapToBookingDetail(CreateBookingDetailRequest createBookingDetailRequest,
       BookingCard bookingCard, RoomType roomType);

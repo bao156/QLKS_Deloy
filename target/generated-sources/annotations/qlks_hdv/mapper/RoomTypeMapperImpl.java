@@ -7,7 +7,7 @@ import qlks_hdv.response.GetRoomTypeWithPriceResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-07T23:40:46+0700",
+    date = "2021-06-08T22:07:25+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
@@ -22,6 +22,7 @@ public class RoomTypeMapperImpl implements RoomTypeMapper {
         GetRoomTypeWithPriceResponse getRoomTypeWithPriceResponse = new GetRoomTypeWithPriceResponse();
 
         if ( roomType != null ) {
+            getRoomTypeWithPriceResponse.setId( roomType.getId() );
             getRoomTypeWithPriceResponse.setNumberOfBed( roomType.getNumberOfBed() );
             getRoomTypeWithPriceResponse.setName( roomType.getName() );
             getRoomTypeWithPriceResponse.setDesciption( roomType.getDesciption() );

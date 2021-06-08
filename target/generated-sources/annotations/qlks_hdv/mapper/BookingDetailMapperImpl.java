@@ -10,7 +10,7 @@ import qlks_hdv.response.GetBookingDetailResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-07T23:41:15+0700",
+    date = "2021-06-08T22:07:25+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
@@ -25,13 +25,15 @@ public class BookingDetailMapperImpl implements BookingDetailMapper {
         BookingDetail bookingDetail = new BookingDetail();
 
         if ( createBookingDetailRequest != null ) {
-            bookingDetail.setPrice( createBookingDetailRequest.getPrice() );
             bookingDetail.setRecieveAt( createBookingDetailRequest.getRecieveAt() );
             bookingDetail.setBackAt( createBookingDetailRequest.getBackAt() );
             bookingDetail.setAmount( createBookingDetailRequest.getAmount() );
         }
         if ( bookingCard != null ) {
             bookingDetail.setBookingCard( bookingCard );
+        }
+        if ( roomType != null ) {
+            bookingDetail.setType( roomType );
         }
 
         return bookingDetail;

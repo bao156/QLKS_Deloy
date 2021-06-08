@@ -6,7 +6,9 @@ import lombok.Data;
 public class GetUserResponse {
 
   private String username;
+
   private String password;
+
   private String roleName;
 
 }

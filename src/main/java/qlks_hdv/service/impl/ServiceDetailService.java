@@ -51,6 +51,7 @@ public class ServiceDetailService implements IServiceDetail {
     ServiceDetail serviceDetail = serviceDetailMapper
         .mapToServiceDetail(createServiceDetailRequest, bookingCard, service);
     serviceDetailRepository.save(serviceDetail);
+    bookingCardService.updatePriceOfBookingCard(bookingCard.getBookingId());
   }
 
   @Override
@@ -62,6 +63,11 @@ public class ServiceDetailService implements IServiceDetail {
           .findBookingCardByStatusAndCustomerUserUsername("Processing", username)
           .orElseThrow(() -> new NotFoundException("booking-not-exist"));
       bookingId = bookingCard.getBookingId();
+    }
+
+    if (!bookingCardRepository
+        .existsBookingCardByBookingIdAndAndCustomerUserUsername(bookingId, username)) {
+      throw new NotFoundException("booking-card-not-found");
     }
 
     List<ServiceDetail> serviceDetailList = serviceDetailRepository

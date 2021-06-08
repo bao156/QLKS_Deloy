@@ -11,4 +11,6 @@ public interface IBookingDetailService {
   List<GetBookingDetailResponse> getBookingDetailByBookingCardId(Integer bookingId,
       String username);
 
+  Integer getPriceOfARoom(String recieveDate, String backDate, Integer typeId);
+
 }

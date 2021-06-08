@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class GetRoomTypeWithPriceResponse {
 
+  private Integer id;
+
   private Integer numberOfBed;
 
   private String name;

@@ -18,5 +18,4 @@ public class CreateBookingDetailRequest {
 
   private Integer amount;
 
-  private Integer price;
 }

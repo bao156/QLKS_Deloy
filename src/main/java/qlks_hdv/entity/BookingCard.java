@@ -32,6 +32,9 @@ public class BookingCard {
   @Column(name = "status")
   private String status;
 
+  @Column(name = "complete_at")
+  private String completeAt;
+
   @ManyToOne
   @JoinColumn(name = "customer_id")
   private Customer customer;
@@ -40,7 +43,7 @@ public class BookingCard {
   @JoinColumn(name = "discount_id")
   private Discount discount;
 
-  @OneToMany(mappedBy = "bookingCard", fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+  @OneToMany(mappedBy = "bookingCard", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   private List<BookingDetail> bookingDetailList;
 
 

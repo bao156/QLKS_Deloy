@@ -11,6 +11,8 @@ public class GetBookingCardReponse {
 
   private String status;
 
+  private String completeAt;
+
   private String username;
 
   private String lastName;

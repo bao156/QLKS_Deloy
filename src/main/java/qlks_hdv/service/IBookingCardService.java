@@ -10,4 +10,8 @@ public interface IBookingCardService {
 
   List<GetBookingCardReponse> getAllBookingCardsByUsername(String username);
 
+  void updatePriceOfBookingCard(int bookingId);
+
+  void updateCompleteDateOnBookingCard(int bookingId);
+
 }
