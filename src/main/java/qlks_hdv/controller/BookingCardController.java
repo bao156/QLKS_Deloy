@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import qlks_hdv.request.CreateBookingCardRequest;
-import qlks_hdv.request.RevenueAtDate;
 import qlks_hdv.response.GetBookingCardReponse;
 import qlks_hdv.service.impl.BookingCardService;
 

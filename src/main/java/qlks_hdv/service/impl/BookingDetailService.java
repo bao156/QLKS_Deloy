@@ -18,6 +18,7 @@ import qlks_hdv.entity.BookingCard;
 import qlks_hdv.entity.BookingDetail;
 import qlks_hdv.entity.Price;
 import qlks_hdv.entity.RoomType;
+import qlks_hdv.entity.compositekey.BookingDetailId;
 import qlks_hdv.entity.compositekey.PriceId;
 import qlks_hdv.exception.BadRequestException;
 import qlks_hdv.exception.NotFoundException;
@@ -176,5 +177,13 @@ public class BookingDetailService implements IBookingDetailService {
     return roomTypeRank;
   }
 
+  @Override
+  @Transactional
+  public void deleteDetailBooking(BookingDetailId bookingDetailId) {
+    BookingDetail bookingDetail = bookingDetailRepository.findById(bookingDetailId)
+        .orElseThrow(() -> new NotFoundException("booking-detail-not-exist"));
+    bookingDetailRepository.delete(bookingDetail);
+    bookingCardService.updatePriceOfBookingCard(bookingDetailId.getBookingCard());
+  }
 
 }

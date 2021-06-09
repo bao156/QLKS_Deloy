@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import qlks_hdv.entity.BookingCard;
 import qlks_hdv.entity.ServiceDetail;
 import qlks_hdv.entity.Services;
+import qlks_hdv.entity.compositekey.ServiceDetailId;
 import qlks_hdv.exception.NotFoundException;
 import qlks_hdv.mapper.ServiceDetailMapper;
 import qlks_hdv.repository.BookingCardRepository;
@@ -76,6 +77,15 @@ public class ServiceDetailService implements IServiceDetail {
     return serviceDetailList.stream()
         .map(detail -> serviceDetailMapper.mapToServiceDetailResponse(detail))
         .collect(Collectors.toList());
+  }
+
+  @Override
+  @Transactional
+  public void deleteServiceDetail(ServiceDetailId serviceDetailId) {
+    ServiceDetail serviceDetail = serviceDetailRepository.findById(serviceDetailId)
+        .orElseThrow(() -> new NotFoundException("service-detail-not-found"));
+    serviceDetailRepository.delete(serviceDetail);
+    bookingCardService.updatePriceOfBookingCard(serviceDetailId.getBookingCard());
   }
 
 }
