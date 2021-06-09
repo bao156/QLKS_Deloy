@@ -1,6 +1,7 @@
 package qlks_hdv.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,10 +10,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import qlks_hdv.request.CreateBookingCardRequest;
+import qlks_hdv.request.RevenueAtDate;
 import qlks_hdv.response.GetBookingCardReponse;
 import qlks_hdv.service.impl.BookingCardService;
 
@@ -36,6 +39,17 @@ public class BookingCardController {
       @PathVariable("username") String username) {
 
     return ResponseEntity.ok().body(bookingCardService.getAllBookingCardsByUsername(username));
+  }
+
+  @PutMapping("{bookingId}")
+  public ResponseEntity<Void> disableBookingCard(@PathVariable("bookingId") Integer bookingId) {
+    bookingCardService.disableBookingCard(bookingId);
+    return ResponseEntity.ok().build();
+  }
+
+  @GetMapping
+  ResponseEntity<HashMap<Integer,Integer>> getRevenue(int year) {
+    return ResponseEntity.ok(bookingCardService.getRevenueAtDate(year));
   }
 
 }

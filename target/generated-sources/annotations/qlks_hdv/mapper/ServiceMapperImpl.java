@@ -9,7 +9,7 @@ import qlks_hdv.response.GetServiceResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-08T22:07:25+0700",
+    date = "2021-06-09T14:01:18+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
@@ -51,6 +51,9 @@ public class ServiceMapperImpl implements ServiceMapper {
 
         GetServiceResponse getServiceResponse = new GetServiceResponse();
 
+        if ( services.getId() != null ) {
+            getServiceResponse.setId( String.valueOf( services.getId() ) );
+        }
         getServiceResponse.setServiceName( services.getServiceName() );
         getServiceResponse.setPrice( services.getPrice() );
         getServiceResponse.setImage( services.getImage() );

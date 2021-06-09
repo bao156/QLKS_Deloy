@@ -1,8 +1,12 @@
 package qlks_hdv.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -18,6 +22,7 @@ import qlks_hdv.entity.compositekey.PriceId;
 import qlks_hdv.exception.BadRequestException;
 import qlks_hdv.exception.NotFoundException;
 import qlks_hdv.mapper.BookingDetailMapper;
+import qlks_hdv.mapper.RoomTypeMapper;
 import qlks_hdv.repository.BookingCardRepository;
 import qlks_hdv.repository.BookingDetailRepository;
 import qlks_hdv.repository.PricesRepository;
@@ -25,6 +30,7 @@ import qlks_hdv.repository.RoomTypeRepository;
 import qlks_hdv.request.CreateBookingCardRequest;
 import qlks_hdv.request.CreateBookingDetailRequest;
 import qlks_hdv.response.GetBookingDetailResponse;
+import qlks_hdv.response.GetRoomTypeWithPriceResponse;
 import qlks_hdv.service.IBookingDetailService;
 
 @Data
@@ -39,6 +45,7 @@ public class BookingDetailService implements IBookingDetailService {
   private final BookingDetailMapper bookingDetailMapper;
   private final BookingCardService bookingCardService;
   private final PricesRepository pricesRepository;
+  private final RoomTypeMapper roomTypeMapper;
 
   @Override
   @Transactional
@@ -78,11 +85,10 @@ public class BookingDetailService implements IBookingDetailService {
       bookingId = bookingCard.getBookingId();
     }
 
-   if(!bookingCardRepository.existsBookingCardByBookingIdAndAndCustomerUserUsername(bookingId,username))
-   {
+    if (!bookingCardRepository
+        .existsBookingCardByBookingIdAndAndCustomerUserUsername(bookingId, username)) {
       throw new NotFoundException("booking-card-not-found");
-   }
-
+    }
     List<BookingDetail> bookingDetailList = bookingDetailRepository
         .findAllByBookingCardBookingId(bookingId);
 
@@ -122,6 +128,52 @@ public class BookingDetailService implements IBookingDetailService {
       throw new BadRequestException("invalid-date");
     }
     return price;
+  }
+
+  @Override
+  public List<GetRoomTypeWithPriceResponse> getRoomTypeBookingRank() {
+    List<GetRoomTypeWithPriceResponse> roomTypeRank = new ArrayList<>();
+    List<BookingDetail> bookingDetailList = bookingDetailRepository.findAll();
+    List<RoomType> roomTypeList = roomTypeRepository.findAll();
+    HashMap<RoomType, Integer> getTimesBooking = new HashMap<>();
+    for (RoomType roomType : roomTypeList) {
+      getTimesBooking.put(roomType, 0);
+    }
+
+    for (BookingDetail bookingDetail : bookingDetailList) {
+      getTimesBooking
+          .put(bookingDetail.getType(), getTimesBooking.get(bookingDetail.getType()) + 1);
+    }
+    List<Integer> listTempTimes = new ArrayList<>();
+    for (Integer i : getTimesBooking.values()) {
+      listTempTimes.add(i);
+    }
+    Collections.sort(listTempTimes, new Comparator<Integer>() {
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        return o1 > o2 ? -1 : 1;
+      }
+    });
+
+    for (Integer i : listTempTimes) {
+      for (RoomType j : getTimesBooking.keySet()) {
+        if (i == getTimesBooking.get(j)) {
+          Date now = new Date();
+          Calendar calendar = Calendar.getInstance();
+          calendar.setTime(now);
+          int date = calendar.get(Calendar.DAY_OF_WEEK);
+          boolean isWeekend = (date == 7 || date == 1) ? true : false;
+          PriceId priceId = new PriceId(j.getId(), isWeekend);
+          Price price = pricesRepository.getOne(priceId);
+          GetRoomTypeWithPriceResponse getRoomTypeWithPriceResponse = roomTypeMapper
+              .mapToGetRoomTypeWithPriceResponse(j, price.getPrice());
+          if (!roomTypeRank.contains(getRoomTypeWithPriceResponse)) {
+            roomTypeRank.add(getRoomTypeWithPriceResponse);
+          }
+        }
+      }
+    }
+    return roomTypeRank;
   }
 
 

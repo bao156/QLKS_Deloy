@@ -1,5 +1,11 @@
 package qlks_hdv.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
@@ -13,6 +19,7 @@ import qlks_hdv.entity.BookingDetail;
 import qlks_hdv.entity.Customer;
 import qlks_hdv.entity.Discount;
 import qlks_hdv.entity.ServiceDetail;
+import qlks_hdv.exception.BadRequestException;
 import qlks_hdv.exception.NotFoundException;
 import qlks_hdv.mapper.BookingCardMapper;
 import qlks_hdv.repository.BookingCardRepository;
@@ -108,5 +115,59 @@ public class BookingCardService implements IBookingCardService {
 
   }
 
+
+  @Override
+  @Transactional
+  public void disableBookingCard(Integer bookingId) {
+
+    BookingCard bookingCard = bookingCardRepository.findById(bookingId)
+        .orElseThrow(() -> new NotFoundException("booking-card-not-found"));
+
+    if (bookingCard.getStatus().equals("Completed") || bookingCard.getStatus()
+        .equals("Renting")) {
+      throw new BadRequestException("can-not-disable");
+    }
+    bookingCard.setStatus("Cancel");
+
+    bookingCardRepository.save(bookingCard);
+
+  }
+
+  @Override
+  public HashMap<Integer, Integer> getRevenueAtDate(int year) {
+    HashMap<Integer, Integer> revenueList = new HashMap<>();
+    List<BookingCard> bookingCardList = bookingCardRepository.findAll();
+    for (int i = 0; i < 12; i++) {
+      revenueList.put(i, 0);
+    }
+    year = year - 1900;
+    for (BookingCard bookingCard : bookingCardList) {
+      List<Integer> tempList = getPriceCalcute(year, bookingCard);
+      revenueList.put(tempList.get(0), (tempList.get(1) + revenueList.get(tempList.get(0))));
+    }
+    return revenueList;
+  }
+
+  @Override
+  public List<Integer> getPriceCalcute(int year, BookingCard bookingCard) {
+    List<Integer> priceAndMonth = new ArrayList<>();
+    priceAndMonth.add(0);
+    priceAndMonth.add(0);
+    try {
+      Date revenueAt = new SimpleDateFormat("yyyy-MM-dd").parse(bookingCard.getCompleteAt().trim());
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(revenueAt);
+      int monthTemp = cal.getTime().getMonth();
+      int yearTemp = cal.getTime().getYear();
+      priceAndMonth.set(0, monthTemp);
+      priceAndMonth.set(1, 0);
+      if (yearTemp == year) {
+        priceAndMonth.set(1, bookingCard.getPrice());
+      }
+
+    } catch (ParseException e) {
+    }
+    return priceAndMonth;
+  }
 
 }
