@@ -11,7 +11,7 @@ import qlks_hdv.response.GetRoomResponseWithPrice;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-09T14:01:18+0700",
+    date = "2021-06-09T21:50:31+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component

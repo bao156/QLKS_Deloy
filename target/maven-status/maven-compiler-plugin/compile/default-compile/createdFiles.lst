@@ -44,6 +44,7 @@ qlks_hdv\repository\BookingCardRepository.class
 qlks_hdv\response\GetServiceResponse.class
 qlks_hdv\repository\ServiceDetailRepository.class
 qlks_hdv\controller\StaffController.class
+qlks_hdv\service\impl\BookingDetailService$1.class
 qlks_hdv\controller\BookingCardController.class
 qlks_hdv\mapper\UserMapperImpl.class
 qlks_hdv\entity\compositekey\PriceId.class

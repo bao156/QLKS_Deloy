@@ -21,6 +21,7 @@ public interface BookingDetailMapper {
       BookingCard bookingCard, RoomType roomType);
 
   @Mappings({
+      @Mapping(target = "bookingId", source = "bookingDetail.bookingCard.bookingId"),
       @Mapping(target = "nameType", source = "bookingDetail.type.name"),
       @Mapping(target = "numberOfBed", source = "bookingDetail.type.numberOfBed")
   })

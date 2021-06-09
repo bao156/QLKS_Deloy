@@ -10,7 +10,7 @@ import qlks_hdv.response.GetBookingDetailResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-09T14:01:18+0700",
+    date = "2021-06-09T21:50:51+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
@@ -47,6 +47,7 @@ public class BookingDetailMapperImpl implements BookingDetailMapper {
 
         GetBookingDetailResponse getBookingDetailResponse = new GetBookingDetailResponse();
 
+        getBookingDetailResponse.setBookingId( bookingDetailBookingCardBookingId( bookingDetail ) );
         getBookingDetailResponse.setNameType( bookingDetailTypeName( bookingDetail ) );
         getBookingDetailResponse.setNumberOfBed( bookingDetailTypeNumberOfBed( bookingDetail ) );
         getBookingDetailResponse.setRecieveAt( bookingDetail.getRecieveAt() );
@@ -55,6 +56,21 @@ public class BookingDetailMapperImpl implements BookingDetailMapper {
         getBookingDetailResponse.setPrice( bookingDetail.getPrice() );
 
         return getBookingDetailResponse;
+    }
+
+    private Integer bookingDetailBookingCardBookingId(BookingDetail bookingDetail) {
+        if ( bookingDetail == null ) {
+            return null;
+        }
+        BookingCard bookingCard = bookingDetail.getBookingCard();
+        if ( bookingCard == null ) {
+            return null;
+        }
+        Integer bookingId = bookingCard.getBookingId();
+        if ( bookingId == null ) {
+            return null;
+        }
+        return bookingId;
     }
 
     private String bookingDetailTypeName(BookingDetail bookingDetail) {

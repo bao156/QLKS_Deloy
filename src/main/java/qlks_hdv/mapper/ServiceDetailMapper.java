@@ -18,6 +18,10 @@ public interface ServiceDetailMapper {
   ServiceDetail mapToServiceDetail(CreateServiceDetailRequest createServiceDetailRequest,
       BookingCard bookingCard, Services service);
 
-  @Mapping(target = "nameService", source = "serviceDetail.service.serviceName")
+  @Mappings({
+      @Mapping(target = "bookingId", source = "serviceDetail.bookingCard.bookingId"),
+      @Mapping(target = "nameService", source = "serviceDetail.service.serviceName")
+  })
+
   GetServiceDetailResponse mapToServiceDetailResponse(ServiceDetail serviceDetail);
 }

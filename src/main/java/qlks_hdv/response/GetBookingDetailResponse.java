@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class GetBookingDetailResponse {
 
+  private Integer bookingId;
+
   private String nameType;
 
   private Integer numberOfBed;
