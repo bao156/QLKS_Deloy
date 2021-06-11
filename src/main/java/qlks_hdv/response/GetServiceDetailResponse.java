@@ -9,7 +9,7 @@ public class GetServiceDetailResponse {
 
   private Integer serviceId;
 
-  private String nameService;
+  private String serviceName;
 
   private Integer quantity;
 
