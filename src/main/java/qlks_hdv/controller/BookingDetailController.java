@@ -49,8 +49,8 @@ public class BookingDetailController {
   public ResponseEntity<Void> getBookingDetails(BookingDetailId bookingDetailId) {
     bookingDetailService.deleteDetailBooking(bookingDetailId);
     return ResponseEntity.ok().build();
-
   }
+
 
 
 }

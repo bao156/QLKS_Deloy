@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import qlks_hdv.entity.compositekey.ServiceDetailId;
 import qlks_hdv.request.CreateServiceDetailRequest;
+import qlks_hdv.response.GetRoomTypeWithPriceResponse;
 import qlks_hdv.response.GetServiceDetailResponse;
+import qlks_hdv.response.GetServiceResponse;
 import qlks_hdv.service.impl.ServiceDetailService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -44,6 +46,11 @@ public class ServiceDetailController {
   public ResponseEntity<Void> deleteServiceDetail(ServiceDetailId serviceDetailId) {
     serviceDetailService.deleteServiceDetail(serviceDetailId);
     return ResponseEntity.ok().build();
+  }
+
+  @GetMapping
+  public ResponseEntity<List<GetServiceResponse>> getServiceRank() {
+    return ResponseEntity.ok(serviceDetailService.getServiceBookingRank());
   }
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import qlks_hdv.entity.compositekey.ServiceDetailId;
 import qlks_hdv.request.CreateServiceDetailRequest;
 import qlks_hdv.response.GetServiceDetailResponse;
+import qlks_hdv.response.GetServiceResponse;
 
 public interface IServiceDetail {
 
@@ -13,4 +14,5 @@ public interface IServiceDetail {
 
   void deleteServiceDetail(ServiceDetailId serviceDetailId);
 
+  List<GetServiceResponse> getServiceBookingRank();
 }
