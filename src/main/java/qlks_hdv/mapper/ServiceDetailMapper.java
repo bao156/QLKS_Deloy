@@ -20,8 +20,9 @@ public interface ServiceDetailMapper {
 
   @Mappings({
       @Mapping(target = "bookingId", source = "serviceDetail.bookingCard.bookingId"),
+      @Mapping(target = "serviceId", source = "serviceDetail.service.id"),
       @Mapping(target = "nameService", source = "serviceDetail.service.serviceName")
-  })
 
+  })
   GetServiceDetailResponse mapToServiceDetailResponse(ServiceDetail serviceDetail);
 }

@@ -40,14 +40,15 @@ public class BookingCardController {
     return ResponseEntity.ok().body(bookingCardService.getAllBookingCardsByUsername(username));
   }
 
-  @PutMapping("{bookingId}")
-  public ResponseEntity<Void> disableBookingCard(@PathVariable("bookingId") Integer bookingId) {
-    bookingCardService.disableBookingCard(bookingId);
+  @PutMapping("{bookingId}/{isCancel}")
+  public ResponseEntity<Void> disableBookingCard(@PathVariable("bookingId") Integer bookingId,
+      @PathVariable("isCancel") Boolean isCancel) {
+    bookingCardService.changeStatusBookingCard(bookingId, isCancel);
     return ResponseEntity.ok().build();
   }
 
   @GetMapping
-  ResponseEntity<HashMap<Integer,Integer>> getRevenue(int year) {
+  ResponseEntity<HashMap<Integer, Integer>> getRevenue(int year) {
     return ResponseEntity.ok(bookingCardService.getRevenueAtDate(year));
   }
 

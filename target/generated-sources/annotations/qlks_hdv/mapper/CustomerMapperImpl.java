@@ -10,7 +10,7 @@ import qlks_hdv.response.GetCustomerResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-09T21:50:31+0700",
+    date = "2021-06-11T09:37:39+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component

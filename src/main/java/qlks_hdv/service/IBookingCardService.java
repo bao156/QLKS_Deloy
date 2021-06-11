@@ -16,7 +16,7 @@ public interface IBookingCardService {
 
   void updateCompleteDateOnBookingCard(int bookingId);
 
-  void disableBookingCard(Integer bookingId);
+  void changeStatusBookingCard(Integer bookingId,Boolean isCancel);
 
   HashMap<Integer, Integer> getRevenueAtDate(int year);
 

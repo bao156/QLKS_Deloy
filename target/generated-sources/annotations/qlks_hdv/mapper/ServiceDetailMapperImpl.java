@@ -10,7 +10,7 @@ import qlks_hdv.response.GetServiceDetailResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-09T21:50:51+0700",
+    date = "2021-06-11T09:38:14+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
@@ -47,6 +47,7 @@ public class ServiceDetailMapperImpl implements ServiceDetailMapper {
         GetServiceDetailResponse getServiceDetailResponse = new GetServiceDetailResponse();
 
         getServiceDetailResponse.setBookingId( serviceDetailBookingCardBookingId( serviceDetail ) );
+        getServiceDetailResponse.setServiceId( serviceDetailServiceId( serviceDetail ) );
         getServiceDetailResponse.setNameService( serviceDetailServiceServiceName( serviceDetail ) );
         getServiceDetailResponse.setQuantity( serviceDetail.getQuantity() );
         getServiceDetailResponse.setPrice( serviceDetail.getPrice() );
@@ -67,6 +68,21 @@ public class ServiceDetailMapperImpl implements ServiceDetailMapper {
             return null;
         }
         return bookingId;
+    }
+
+    private Integer serviceDetailServiceId(ServiceDetail serviceDetail) {
+        if ( serviceDetail == null ) {
+            return null;
+        }
+        Services service = serviceDetail.getService();
+        if ( service == null ) {
+            return null;
+        }
+        Integer id = service.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
     }
 
     private String serviceDetailServiceServiceName(ServiceDetail serviceDetail) {

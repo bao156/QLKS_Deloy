@@ -23,6 +23,7 @@ public interface BookingDetailMapper {
   @Mappings({
       @Mapping(target = "bookingId", source = "bookingDetail.bookingCard.bookingId"),
       @Mapping(target = "nameType", source = "bookingDetail.type.name"),
+      @Mapping(target = "typeId", source = "bookingDetail.type.id"),
       @Mapping(target = "numberOfBed", source = "bookingDetail.type.numberOfBed")
   })
   GetBookingDetailResponse mapToGetBookingDetailResponse(BookingDetail bookingDetail);

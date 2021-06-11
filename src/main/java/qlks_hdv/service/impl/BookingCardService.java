@@ -118,16 +118,28 @@ public class BookingCardService implements IBookingCardService {
 
   @Override
   @Transactional
-  public void disableBookingCard(Integer bookingId) {
+  public void changeStatusBookingCard(Integer bookingId, Boolean isCancel) {
 
     BookingCard bookingCard = bookingCardRepository.findById(bookingId)
         .orElseThrow(() -> new NotFoundException("booking-card-not-found"));
-
-    if (bookingCard.getStatus().equals("Completed") || bookingCard.getStatus()
-        .equals("Renting")) {
-      throw new BadRequestException("can-not-disable");
+    if (isCancel) {
+      if (bookingCard.getStatus().equals("Completed") || bookingCard.getStatus()
+          .equals("Renting")) {
+        throw new BadRequestException("can-not-disable");
+      }
+      bookingCard.setStatus("Cancel");
+    } else {
+      if (bookingCard.getStatus().equals("Completed")) {
+        throw new BadRequestException("can-not-change");
+      }
+      if (bookingCard.getStatus().equals("Processing")) {
+        bookingCard.setStatus("Reservated");
+      } else if (bookingCard.getStatus().equals("Reservated")) {
+        bookingCard.setStatus("Renting");
+      } else if (bookingCard.getStatus().equals("Renting")) {
+        bookingCard.setStatus("Completed");
+      }
     }
-    bookingCard.setStatus("Cancel");
 
     bookingCardRepository.save(bookingCard);
 
