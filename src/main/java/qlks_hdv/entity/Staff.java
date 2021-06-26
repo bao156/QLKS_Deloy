@@ -1,5 +1,7 @@
 package qlks_hdv.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,14 +9,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode( exclude="user")
 @Table(name = "Staff")
 public class Staff {
 
@@ -42,8 +47,8 @@ public class Staff {
   @JoinColumn(name = "username")
   private User user;
 
-//  @OneToMany(mappedBy = "staff")
-//  private List<Renting> renting;
+  @OneToMany(mappedBy = "staff")
+  private List<RentingDetail> rentings = new ArrayList<>();
 
 
 }

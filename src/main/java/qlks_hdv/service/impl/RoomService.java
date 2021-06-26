@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import qlks_hdv.entity.Price;
 import qlks_hdv.entity.Room;
+import qlks_hdv.entity.RoomStatus;
 import qlks_hdv.entity.RoomType;
 import qlks_hdv.entity.compositekey.PriceId;
 import qlks_hdv.exception.ConflictException;
@@ -38,12 +39,13 @@ public class RoomService implements IRoomService {
   public void createaRoom(CreateRoomRequest createRoomRequest) {
     if (roomRepostiory.existsByRoomCode(createRoomRequest.getRoomCode())) {
       throw new ConflictException("room-code-already-exist");
+
     }
 
     RoomType type = roomTypeRepository.findOneByNumberOfBed(createRoomRequest.getNumberOfBed())
         .orElseThrow(() -> new NotFoundException("type-not-found"));
 
-    Room room = roomMapper.mapToRoom(createRoomRequest, type);
+    Room room = roomMapper.mapToRoom(createRoomRequest, type, RoomStatus.Empty.name());
     roomRepostiory.save(room);
 
   }

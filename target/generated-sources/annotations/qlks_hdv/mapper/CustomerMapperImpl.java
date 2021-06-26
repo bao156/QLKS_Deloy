@@ -4,13 +4,14 @@ import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 import qlks_hdv.entity.Customer;
 import qlks_hdv.entity.User;
+import qlks_hdv.request.CreateCustomerRentingRequest;
 import qlks_hdv.request.CreateCustomerRequest;
 import qlks_hdv.request.UpdateCustomerRequest;
 import qlks_hdv.response.GetCustomerResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-11T14:02:42+0700",
+    date = "2021-06-27T01:22:41+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
@@ -29,6 +30,7 @@ public class CustomerMapperImpl implements CustomerMapper {
             customer.setLastName( createCustomerRequest.getLastName() );
             customer.setPhone( createCustomerRequest.getPhone() );
             customer.setEmail( createCustomerRequest.getEmail() );
+            customer.setCMND( createCustomerRequest.getCMND() );
         }
         if ( user != null ) {
             customer.setUser( user );
@@ -70,5 +72,20 @@ public class CustomerMapperImpl implements CustomerMapper {
         }
 
         return getCustomerResponse;
+    }
+
+    @Override
+    public Customer mapToCustomer(CreateCustomerRentingRequest createCustomerRentingRequest) {
+        if ( createCustomerRentingRequest == null ) {
+            return null;
+        }
+
+        Customer customer = new Customer();
+
+        customer.setFirstName( createCustomerRentingRequest.getFirstName() );
+        customer.setLastName( createCustomerRentingRequest.getLastName() );
+        customer.setCMND( createCustomerRentingRequest.getCMND() );
+
+        return customer;
     }
 }

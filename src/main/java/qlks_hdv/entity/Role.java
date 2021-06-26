@@ -7,15 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "users")
 @Entity
 @Table(name = "Roles")
 public class Role {
@@ -27,10 +27,6 @@ public class Role {
 
   @Column(name = "role_name")
   private String roleName;
-
-  @ManyToOne
-  @JoinColumn(name = "hotel_id")
-  private Hotel hotel;
 
   @OneToMany(mappedBy = "roles")
   private List<User> users = new ArrayList<>();

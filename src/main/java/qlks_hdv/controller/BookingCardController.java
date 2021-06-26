@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import qlks_hdv.request.CreateBookingCardRequest;
+import qlks_hdv.response.GetBookingCardForPaymentReponse;
 import qlks_hdv.response.GetBookingCardReponse;
 import qlks_hdv.service.impl.BookingCardService;
 
@@ -50,6 +51,12 @@ public class BookingCardController {
   @GetMapping
   ResponseEntity<HashMap<Integer, Integer>> getRevenue(int year) {
     return ResponseEntity.ok(bookingCardService.getRevenueAtDate(year));
+  }
+
+  @PutMapping("payment/{bookingId}/{username}")
+  public ResponseEntity<GetBookingCardForPaymentReponse> paymentBookingCard(
+      @PathVariable("bookingId") Integer bookingId, @PathVariable("username") String username) {
+    return ResponseEntity.ok().body(bookingCardService.Payment(bookingId, username));
   }
 
 }

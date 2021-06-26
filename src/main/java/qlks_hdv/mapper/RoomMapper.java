@@ -15,9 +15,10 @@ import qlks_hdv.response.GetRoomResponseWithPrice;
 public interface RoomMapper {
 
   @Mappings({
-      @Mapping(target = "type", source = "type")
+      @Mapping(target = "type", source = "type"),
+      @Mapping(target = "status", source = "status")
   })
-  Room mapToRoom(CreateRoomRequest createRoomRequest,RoomType type);
+  Room mapToRoom(CreateRoomRequest createRoomRequest,RoomType type, String status);
 
   Room mapToRoom(UpdateRoomRequest updateRoomRequest, @MappingTarget Room room);
 

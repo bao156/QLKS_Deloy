@@ -1,5 +1,6 @@
 package qlks_hdv.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,7 +45,7 @@ public class BookingCard {
   private Discount discount;
 
   @OneToMany(mappedBy = "bookingCard", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-  private List<BookingDetail> bookingDetailList;
+  private List<BookingDetail> bookingDetailList = new ArrayList<>();
 
 
 }

@@ -18,7 +18,11 @@ import qlks_hdv.entity.BookingCard;
 import qlks_hdv.entity.BookingDetail;
 import qlks_hdv.entity.Customer;
 import qlks_hdv.entity.Discount;
+import qlks_hdv.entity.RentingDetail;
+import qlks_hdv.entity.Room;
+import qlks_hdv.entity.RoomStatus;
 import qlks_hdv.entity.ServiceDetail;
+import qlks_hdv.entity.Staff;
 import qlks_hdv.exception.BadRequestException;
 import qlks_hdv.exception.NotFoundException;
 import qlks_hdv.mapper.BookingCardMapper;
@@ -26,8 +30,12 @@ import qlks_hdv.repository.BookingCardRepository;
 import qlks_hdv.repository.BookingDetailRepository;
 import qlks_hdv.repository.CustomerRepository;
 import qlks_hdv.repository.DiscountRepository;
+import qlks_hdv.repository.RentingDetailRepository;
+import qlks_hdv.repository.RoomRepostiory;
 import qlks_hdv.repository.ServiceDetailRepository;
+import qlks_hdv.repository.StaffRepository;
 import qlks_hdv.request.CreateBookingCardRequest;
+import qlks_hdv.response.GetBookingCardForPaymentReponse;
 import qlks_hdv.response.GetBookingCardReponse;
 import qlks_hdv.service.IBookingCardService;
 
@@ -42,6 +50,9 @@ public class BookingCardService implements IBookingCardService {
   private final BookingCardMapper bookingCardMapper;
   private final ServiceDetailRepository serviceDetailRepository;
   private final BookingDetailRepository bookingDetailRepository;
+  private final StaffRepository staffRepository;
+  private final RentingDetailRepository rentingDetailRepository;
+  private final RoomRepostiory roomRepostiory;
 
 
   @Override
@@ -140,7 +151,6 @@ public class BookingCardService implements IBookingCardService {
         bookingCard.setStatus("Completed");
       }
     }
-
     bookingCardRepository.save(bookingCard);
 
   }
@@ -180,6 +190,50 @@ public class BookingCardService implements IBookingCardService {
     } catch (ParseException e) {
     }
     return priceAndMonth;
+  }
+
+  @Override
+  @Transactional
+  public GetBookingCardForPaymentReponse Payment(Integer bookingId, String username) {
+
+    BookingCard bookingCard = bookingCardRepository.findById(bookingId)
+        .orElseThrow(() -> new NotFoundException("booking-card-not-found"));
+
+    if (!bookingCard.getStatus().equals("Renting")) {
+      throw new BadRequestException("status-is-not-valid");
+    }
+
+    Staff staff = staffRepository.findByUserUsername(username)
+        .orElseThrow(() -> new NotFoundException("user-not-fount"));
+
+    List<BookingDetail> bookingDetailList = bookingDetailRepository
+        .findAllByBookingCardBookingId(bookingId);
+    int bookingAmount = 0;
+    for (BookingDetail bookingDetail : bookingDetailList) {
+      bookingAmount += bookingDetail.getAmount() * bookingDetail.getPrice();
+    }
+
+    List<ServiceDetail> serviceDetailList = serviceDetailRepository
+        .findAllByBookingCardBookingId(bookingId);
+
+    int serviceAmount = 0;
+    for (ServiceDetail serviceDetail : serviceDetailList) {
+      serviceAmount += serviceDetail.getPrice() * serviceDetail.getQuantity();
+    }
+    GetBookingCardForPaymentReponse getBookingCardForPaymentReponse = bookingCardMapper
+        .mapTGetBookingCardForPaymentReponse(bookingCard, serviceAmount, bookingAmount, username,
+            bookingCard.getCustomer());
+
+    List<RentingDetail> rentingDetails = rentingDetailRepository
+        .findAllByBookingCardBookingId(bookingId);
+
+    for (RentingDetail rentingDetail : rentingDetails) {
+      Room room = roomRepostiory.findById(rentingDetail.getRoom().getRoomCode())
+          .orElseThrow(() -> new NotFoundException("room-not-found"));
+      room.setStatus(RoomStatus.Empty);
+    }
+    bookingCard.setStatus("Completed");
+    return getBookingCardForPaymentReponse;
   }
 
 }

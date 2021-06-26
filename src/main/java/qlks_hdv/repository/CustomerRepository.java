@@ -13,4 +13,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
   Optional<List<Customer>> findAllBy();
 
+  Optional<Customer> findByCMND(String cmnd);
+
+  Boolean existsByCMND(String cmnd);
+
 }

@@ -15,4 +15,6 @@ public class GetCustomerResponse {
 
   private String username;
 
+  private String cmnd;
+
 }

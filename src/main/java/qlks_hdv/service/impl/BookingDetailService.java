@@ -1,5 +1,6 @@
 package qlks_hdv.service.impl;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import qlks_hdv.entity.BookingCard;
 import qlks_hdv.entity.BookingDetail;
 import qlks_hdv.entity.Price;
+import qlks_hdv.entity.Room;
 import qlks_hdv.entity.RoomType;
 import qlks_hdv.entity.compositekey.BookingDetailId;
 import qlks_hdv.entity.compositekey.PriceId;
@@ -27,6 +29,7 @@ import qlks_hdv.mapper.RoomTypeMapper;
 import qlks_hdv.repository.BookingCardRepository;
 import qlks_hdv.repository.BookingDetailRepository;
 import qlks_hdv.repository.PricesRepository;
+import qlks_hdv.repository.RoomRepostiory;
 import qlks_hdv.repository.RoomTypeRepository;
 import qlks_hdv.request.CreateBookingCardRequest;
 import qlks_hdv.request.CreateBookingDetailRequest;
@@ -47,10 +50,42 @@ public class BookingDetailService implements IBookingDetailService {
   private final BookingCardService bookingCardService;
   private final PricesRepository pricesRepository;
   private final RoomTypeMapper roomTypeMapper;
+  private final RoomRepostiory roomRepostiory;
 
   @Override
   @Transactional
   public void addBookingDetail(CreateBookingDetailRequest createBookingDetailRequest) {
+
+    //TÌM ĐỂ KIỂM TRA CÓ BAO NHIÊU PHÒNG LOẠI ĐÓ
+    List<Room> roomListWithIdType = roomRepostiory
+        .findAllByTypeId(createBookingDetailRequest.getTypeId());
+
+    Integer quantityRoomWithTypeId = roomListWithIdType.size();
+
+    List<BookingDetail> bookingDetailList = bookingDetailRepository
+        .findAllByBackAtAfterAndTypeId(
+            downToDate(createBookingDetailRequest.getRecieveAt()),
+            createBookingDetailRequest.getTypeId());
+
+    List<Date> getDatesFromRecieveToBack = getDatesFromTo(createBookingDetailRequest.getRecieveAt(),
+        createBookingDetailRequest.getBackAt());
+
+    for (Date date : getDatesFromRecieveToBack) {
+      int countBooking = 0;
+      for (BookingDetail bookingDetail : bookingDetailList) {
+        if (date.before(changeStringToDate(createBookingDetailRequest.getBackAt()))) {
+          countBooking += bookingDetail.getAmount();
+        }
+      }
+      if (countBooking == quantityRoomWithTypeId) {
+        throw new BadRequestException("room-is-full-for-type-on-that-date");
+      }
+
+      if ((countBooking + createBookingDetailRequest.getAmount()) > quantityRoomWithTypeId) {
+        throw new BadRequestException(
+            String.valueOf(quantityRoomWithTypeId - countBooking) + "-room-left-for-type");
+      }
+    }
 
     if (!bookingCardRepository.existsBookingCardByStatusAndCustomerUserUsername("Processing",
         createBookingDetailRequest.getUsername())) {
@@ -73,6 +108,7 @@ public class BookingDetailService implements IBookingDetailService {
     bookingDetailRepository.save(bookingDetail);
     bookingCardService.updatePriceOfBookingCard(bookingCard.getBookingId());
     bookingCardService.updateCompleteDateOnBookingCard(bookingCard.getBookingId());
+
   }
 
   @Override
@@ -184,6 +220,53 @@ public class BookingDetailService implements IBookingDetailService {
         .orElseThrow(() -> new NotFoundException("booking-detail-not-exist"));
     bookingDetailRepository.delete(bookingDetail);
     bookingCardService.updatePriceOfBookingCard(bookingDetailId.getBookingCard());
+  }
+
+  @Override
+  public String downToDate(String date) {
+    Integer day = Integer.parseInt(date.substring(date.length() - 2, date.length()));
+    String dayToString = "";
+    day--;
+    dayToString = day < 10 ? "0" + String.valueOf(day) : String.valueOf(day);
+    dayToString = date.substring(0, date.length() - 2) + dayToString;
+    return dayToString;
+
+  }
+
+  @Override
+  public List<Date> getDatesFromTo(String dateFrom, String dateTo) {
+    List<Date> listDayFromTo = new ArrayList<>();
+    try {
+      Date d_from = new SimpleDateFormat("yyyy-MM-dd").parse(dateFrom);
+      Date d_to = new SimpleDateFormat("yyyy-MM-dd").parse(dateTo);
+
+      long t1 = d_from.getTime();
+      long t2 = d_to.getTime();
+
+      SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+
+      if (t1 < t2) {
+        //1 = 1000
+        for (long i = t1; i <= t2; i += 86400000) {
+          Date date = new SimpleDateFormat("yyyy-MM-dd").parse(f.format(i));
+          listDayFromTo.add(date);
+        }
+      }
+    } catch (Exception e) {
+      throw new BadRequestException("invalid-date");
+    }
+    return listDayFromTo;
+  }
+
+  @Override
+  public Date changeStringToDate(String dateString) {
+    Date date = new Date();
+    try {
+      date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+    } catch (ParseException e) {
+      throw new BadRequestException("invalid-date");
+    }
+    return date;
   }
 
 }

@@ -1,5 +1,6 @@
 package qlks_hdv.service;
 
+import java.util.Date;
 import java.util.List;
 import qlks_hdv.entity.compositekey.BookingDetailId;
 import qlks_hdv.request.CreateBookingDetailRequest;
@@ -19,5 +20,10 @@ public interface IBookingDetailService {
 
   void deleteDetailBooking(BookingDetailId bookingDetailId);
 
+  String downToDate(String date);
+
+  List<Date> getDatesFromTo(String dateFrom, String dateTo);
+
+  Date changeStringToDate(String date);
 
 }

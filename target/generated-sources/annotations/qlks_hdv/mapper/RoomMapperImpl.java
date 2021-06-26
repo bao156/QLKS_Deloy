@@ -3,6 +3,7 @@ package qlks_hdv.mapper;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 import qlks_hdv.entity.Room;
+import qlks_hdv.entity.RoomStatus;
 import qlks_hdv.entity.RoomType;
 import qlks_hdv.request.CreateRoomRequest;
 import qlks_hdv.request.UpdateRoomRequest;
@@ -11,15 +12,15 @@ import qlks_hdv.response.GetRoomResponseWithPrice;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-11T14:02:42+0700",
+    date = "2021-06-27T01:22:41+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
 public class RoomMapperImpl implements RoomMapper {
 
     @Override
-    public Room mapToRoom(CreateRoomRequest createRoomRequest, RoomType type) {
-        if ( createRoomRequest == null && type == null ) {
+    public Room mapToRoom(CreateRoomRequest createRoomRequest, RoomType type, String status) {
+        if ( createRoomRequest == null && type == null && status == null ) {
             return null;
         }
 
@@ -32,6 +33,9 @@ public class RoomMapperImpl implements RoomMapper {
         }
         if ( type != null ) {
             room.setType( type );
+        }
+        if ( status != null ) {
+            room.setStatus( Enum.valueOf( RoomStatus.class, status ) );
         }
 
         return room;
@@ -76,6 +80,9 @@ public class RoomMapperImpl implements RoomMapper {
         if ( room != null ) {
             getRoomResponseWithPrice.setNumberOfBed( roomTypeNumberOfBed( room ) );
             getRoomResponseWithPrice.setRoomCode( room.getRoomCode() );
+            if ( room.getStatus() != null ) {
+                getRoomResponseWithPrice.setStatus( room.getStatus().name() );
+            }
             getRoomResponseWithPrice.setDescription( room.getDescription() );
             getRoomResponseWithPrice.setImage( room.getImage() );
         }

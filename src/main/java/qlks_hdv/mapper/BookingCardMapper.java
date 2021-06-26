@@ -7,6 +7,7 @@ import qlks_hdv.entity.BookingCard;
 import qlks_hdv.entity.Customer;
 import qlks_hdv.entity.Discount;
 import qlks_hdv.request.CreateBookingCardRequest;
+import qlks_hdv.response.GetBookingCardForPaymentReponse;
 import qlks_hdv.response.GetBookingCardReponse;
 
 @Mapper(componentModel = "spring")
@@ -29,4 +30,16 @@ public interface BookingCardMapper {
       @Mapping(target = "discountName", source = "discount.discountName")
   })
   GetBookingCardReponse mapToGetBookingCardReponse(BookingCard bookingCard);
+
+  @Mappings({
+      @Mapping(target = "username", source = "staffUser"),
+      @Mapping(target = "serviceAmount", source = "serviceAmount"),
+      @Mapping(target = "roomAmount", source = "roomAmount"),
+      @Mapping(target = "firstName", source = "customer.firstName"),
+      @Mapping(target = "lastName", source = "customer.lastName"),
+      @Mapping(target = "CMND", source = "customer.CMND")
+
+  })
+  GetBookingCardForPaymentReponse mapTGetBookingCardForPaymentReponse(BookingCard bookingCard,
+      Integer serviceAmount, Integer roomAmount, String staffUser,Customer customer);
 }

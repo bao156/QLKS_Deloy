@@ -7,11 +7,12 @@ import qlks_hdv.entity.Customer;
 import qlks_hdv.entity.Discount;
 import qlks_hdv.entity.User;
 import qlks_hdv.request.CreateBookingCardRequest;
+import qlks_hdv.response.GetBookingCardForPaymentReponse;
 import qlks_hdv.response.GetBookingCardReponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-06-11T14:02:42+0700",
+    date = "2021-06-27T01:23:11+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
@@ -59,6 +60,36 @@ public class BookingCardMapperImpl implements BookingCardMapper {
         getBookingCardReponse.setCompleteAt( bookingCard.getCompleteAt() );
 
         return getBookingCardReponse;
+    }
+
+    @Override
+    public GetBookingCardForPaymentReponse mapTGetBookingCardForPaymentReponse(BookingCard bookingCard, Integer serviceAmount, Integer roomAmount, String staffUser, Customer customer) {
+        if ( bookingCard == null && serviceAmount == null && roomAmount == null && staffUser == null && customer == null ) {
+            return null;
+        }
+
+        GetBookingCardForPaymentReponse getBookingCardForPaymentReponse = new GetBookingCardForPaymentReponse();
+
+        if ( bookingCard != null ) {
+            getBookingCardForPaymentReponse.setBookingId( bookingCard.getBookingId() );
+            getBookingCardForPaymentReponse.setCompleteAt( bookingCard.getCompleteAt() );
+        }
+        if ( serviceAmount != null ) {
+            getBookingCardForPaymentReponse.setServiceAmount( serviceAmount );
+        }
+        if ( roomAmount != null ) {
+            getBookingCardForPaymentReponse.setRoomAmount( roomAmount );
+        }
+        if ( staffUser != null ) {
+            getBookingCardForPaymentReponse.setUsername( staffUser );
+        }
+        if ( customer != null ) {
+            getBookingCardForPaymentReponse.setFirstName( customer.getFirstName() );
+            getBookingCardForPaymentReponse.setLastName( customer.getLastName() );
+            getBookingCardForPaymentReponse.setCMND( customer.getCMND() );
+        }
+
+        return getBookingCardForPaymentReponse;
     }
 
     private String bookingCardCustomerUserUsername(BookingCard bookingCard) {
