@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import qlks_hdv.request.CreateRoomRequest;
 import qlks_hdv.request.UpdateRoomRequest;
-import qlks_hdv.response.GetRoomResponse;
 import qlks_hdv.response.GetRoomResponseWithPrice;
 import qlks_hdv.service.impl.RoomService;
 
@@ -47,13 +46,12 @@ public class RoomController {
     return ResponseEntity.ok().build();
   }
 
-//  @GetMapping("/{status}")
-//  public ResponseEntity<List<GetRoomResponse>> getAllRoomsByStatus(
-//      @PathVariable("status") String status) {
-//    return ResponseEntity.ok().body(roomService.getAllRoomsByStatus(status));
-//  }
-
   @GetMapping
+  public ResponseEntity<List<GetRoomResponseWithPrice>> getAllRooms() {
+    return ResponseEntity.ok().body(roomService.getAllRooms());
+  }
+
+  @GetMapping("/detail")
   public ResponseEntity<GetRoomResponseWithPrice> getRoomDetail(@RequestParam String roomCode) {
     return ResponseEntity.ok().body(roomService.getRoomDetail(roomCode));
   }

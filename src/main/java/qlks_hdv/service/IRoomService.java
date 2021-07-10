@@ -1,5 +1,6 @@
 package qlks_hdv.service;
 
+import java.util.List;
 import qlks_hdv.request.CreateRoomRequest;
 import qlks_hdv.request.UpdateRoomRequest;
 import qlks_hdv.response.GetRoomResponseWithPrice;
@@ -13,5 +14,7 @@ public interface IRoomService {
   void deleteRoom(String code);
 
   GetRoomResponseWithPrice getRoomDetail(String roomCode);
+
+  List<GetRoomResponseWithPrice> getAllRooms();
 
 }

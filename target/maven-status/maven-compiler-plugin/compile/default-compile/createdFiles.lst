@@ -13,6 +13,7 @@ qlks_hdv\service\IService.class
 qlks_hdv\entity\User.class
 qlks_hdv\entity\BookingCard.class
 qlks_hdv\request\CreateCustomerRentingRequest.class
+qlks_hdv\controller\AuthController.class
 qlks_hdv\repository\DiscountRepository.class
 qlks_hdv\request\CreateBookingDetailRequest.class
 qlks_hdv\util\DateUtils.class
@@ -113,5 +114,6 @@ qlks_hdv\request\UpdateServiceRequest.class
 qlks_hdv\repository\CustomerRepository.class
 qlks_hdv\mapper\UserMapper.class
 qlks_hdv\mapper\BookingCardMapper.class
+qlks_hdv\util\WebSecurityConfig.class
 qlks_hdv\service\impl\CustomerService.class
 qlks_hdv\service\impl\RoomService.class

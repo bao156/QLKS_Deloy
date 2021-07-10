@@ -73,7 +73,10 @@ public class BookingDetailService implements IBookingDetailService {
     for (Date date : getDatesFromRecieveToBack) {
       int countBooking = 0;
       for (BookingDetail bookingDetail : bookingDetailList) {
-        if (date.before(changeStringToDate(createBookingDetailRequest.getBackAt()))) {
+        if (date.before(changeStringToDate(bookingDetail.getBackAt()))
+            && !createBookingDetailRequest
+            .getUsername()
+            .equals(bookingDetail.getBookingCard().getCustomer().getUser().getUsername())) {
           countBooking += bookingDetail.getAmount();
         }
       }

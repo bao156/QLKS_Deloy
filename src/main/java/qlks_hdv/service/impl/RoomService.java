@@ -2,6 +2,8 @@ package qlks_hdv.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -71,15 +73,30 @@ public class RoomService implements IRoomService {
     Room room = roomRepostiory.findById(roomCode)
         .orElseThrow(() -> new NotFoundException("room-not-exist"));
 
+    PriceId priceId = new PriceId(room.getType().getId(), isWeekend());
+    Price price = pricesRepository.getOne(priceId);
+    return roomMapper
+        .mapToGetRoomResponseWithPrice(room, price.getPrice());
+  }
+
+  @Override
+  public List<GetRoomResponseWithPrice> getAllRooms() {
+
+    return roomRepostiory.findAll().stream().map(room -> {
+      PriceId priceId = new PriceId(room.getType().getId(), isWeekend());
+      Price price = pricesRepository.getOne(priceId);
+      return roomMapper
+          .mapToGetRoomResponseWithPrice(room, price.getPrice());
+    }).collect(Collectors.toList());
+
+  }
+
+  private static Boolean isWeekend() {
     Date now = new Date();
     Calendar cal = Calendar.getInstance();
     cal.setTime(now);
     int date = cal.get(Calendar.DAY_OF_WEEK);
     boolean isWeekend = (date == 7 || date == 1) ? true : false;
-
-    PriceId priceId = new PriceId(room.getType().getId(), isWeekend);
-    Price price = pricesRepository.getOne(priceId);
-    return roomMapper
-        .mapToGetRoomResponseWithPrice(room, price.getPrice());
+    return isWeekend;
   }
 }

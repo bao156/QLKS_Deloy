@@ -14,7 +14,8 @@ import qlks_hdv.response.GetUserResponse;
 public interface UserMapper {
 
   @Mapping(target = "roles", source = "role")
-  User mapToUser(CreateUserRequest createUserRequest, Role role);
+  @Mapping(target = "password", source = "encodePassword")
+  User mapToUser(CreateUserRequest createUserRequest, Role role, String encodePassword);
 
   User mapToUser(UpdateUserRequest updateUserRequest, @MappingTarget User user);
 

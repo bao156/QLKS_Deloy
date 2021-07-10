@@ -1,5 +1,6 @@
 package qlks_hdv.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -50,4 +51,8 @@ public class UserController {
     return ResponseEntity.ok().body(userService.getUserByUsername(username));
   }
 
+  @GetMapping()
+  public ResponseEntity<List<GetUserResponse>> getAllUser() {
+    return ResponseEntity.ok().body(userService.getAllUsers());
+  }
 }
