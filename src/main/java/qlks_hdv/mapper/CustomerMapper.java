@@ -20,6 +20,7 @@ public interface CustomerMapper {
       @MappingTarget Customer customer);
 
   @Mapping(target = "username", source = "username")
+  @Mapping(target = "cmnd",source ="customer.CMND" )
   GetCustomerResponse mapToGetCustomerResponse(Customer customer, String username);
 
   Customer mapToCustomer(CreateCustomerRentingRequest createCustomerRentingRequest);

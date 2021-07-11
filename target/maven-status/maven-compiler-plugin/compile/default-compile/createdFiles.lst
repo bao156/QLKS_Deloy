@@ -40,6 +40,7 @@ qlks_hdv\service\IRentingDetailService.class
 qlks_hdv\response\GetRoomResponseWithPrice.class
 qlks_hdv\request\CreateStaffRequest.class
 qlks_hdv\entity\ServiceDetail.class
+qlks_hdv\service\IAuthService.class
 qlks_hdv\entity\compositekey\ServiceDetailId.class
 qlks_hdv\exception\ConflictException.class
 qlks_hdv\service\IRoomTypeService.class
@@ -52,7 +53,9 @@ qlks_hdv\repository\BookingCardRepository.class
 qlks_hdv\response\GetServiceResponse.class
 qlks_hdv\entity\compositekey\RentingDetailId.class
 qlks_hdv\repository\ServiceDetailRepository.class
+qlks_hdv\service\impl\AuthService.class
 qlks_hdv\controller\StaffController.class
+qlks_hdv\request\SigninRequest.class
 qlks_hdv\service\impl\BookingDetailService$1.class
 qlks_hdv\mapper\RentingMapperImpl.class
 qlks_hdv\controller\BookingCardController.class

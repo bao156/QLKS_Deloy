@@ -79,8 +79,14 @@ public class CustomerService implements ICustomerService {
     List<Customer> customerList = customerRepository.findAllBy()
         .orElseThrow(() -> new NotFoundException("list-be-empty"));
     List<GetCustomerResponse> getCustomerReponseList = customerList.stream()
-        .map(develop -> customerMapper
-            .mapToGetCustomerResponse(develop, develop.getUser().getUsername()))
+        .map(develop -> {
+          String username = "";
+          if (develop.getUser() != null) {
+            username = develop.getUser().getUsername();
+          }
+          return customerMapper
+              .mapToGetCustomerResponse(develop, username);
+        })
         .collect(Collectors.toList());
     return getCustomerReponseList;
   }

@@ -11,7 +11,7 @@ import qlks_hdv.response.GetCustomerResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-07-10T13:53:40+0700",
+    date = "2021-07-11T22:15:46+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
@@ -62,6 +62,8 @@ public class CustomerMapperImpl implements CustomerMapper {
         GetCustomerResponse getCustomerResponse = new GetCustomerResponse();
 
         if ( customer != null ) {
+            getCustomerResponse.setCmnd( customer.getCMND() );
+            getCustomerResponse.setId( customer.getId() );
             getCustomerResponse.setFirstName( customer.getFirstName() );
             getCustomerResponse.setLastName( customer.getLastName() );
             getCustomerResponse.setPhone( customer.getPhone() );

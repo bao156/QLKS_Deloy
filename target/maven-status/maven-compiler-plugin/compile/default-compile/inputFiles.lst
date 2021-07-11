@@ -9,6 +9,7 @@ E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\service\impl\Se
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\request\UpdateUserRequest.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\service\impl\RoomTypeService.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\service\IRoomService.java
+E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\service\IAuthService.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\response\GetUserResponse.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\repository\BookingDetailRepository.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\controller\ServiceDetailController.java
@@ -20,6 +21,7 @@ E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\entity\Customer
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\exception\ConflictException.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\request\CreateServiceRequest.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\controller\UserController.java
+E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\request\SigninRequest.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\entity\Price.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\util\DateUtils.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\service\impl\CustomerService.java
@@ -69,6 +71,7 @@ E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\util\WebSecurit
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\mapper\RoomMapper.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\mapper\ServiceDetailMapper.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\controller\BookingCardController.java
+E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\service\impl\AuthService.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\request\CreateCustomerRentingRequest.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\request\UpdateStaffRequest.java
 E:\Eclipse\qlks_hdv\New folder\QLKS_Deloy\src\main\java\qlks_hdv\service\impl\StaffService.java
