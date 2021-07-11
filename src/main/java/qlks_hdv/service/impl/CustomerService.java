@@ -35,7 +35,10 @@ public class CustomerService implements ICustomerService {
         .orElseThrow(() -> new NotFoundException("user-not-found"));
 
     if (customerRepository.existsByUserUsername(createCustomerRequest.getUsername())) {
-      throw new ConflictException("user-already-exist");
+      throw new ConflictException("username-already-exist");
+    }
+    if (customerRepository.existsByCMND(createCustomerRequest.getCMND())) {
+      throw new ConflictException("cmnd-already-exist");
     }
     Customer customer = customerMapper.mapToCustomer(createCustomerRequest, user);
     customerRepository.save(customer);
