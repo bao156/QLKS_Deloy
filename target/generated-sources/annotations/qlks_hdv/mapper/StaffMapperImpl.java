@@ -2,6 +2,7 @@ package qlks_hdv.mapper;
 
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
+import qlks_hdv.entity.Role;
 import qlks_hdv.entity.Staff;
 import qlks_hdv.entity.User;
 import qlks_hdv.request.CreateStaffRequest;
@@ -10,11 +11,11 @@ import qlks_hdv.response.GetStaffResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-07-11T22:15:17+0700",
+    date = "2021-07-12T23:28:21+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
-public class StaffMapperImpl implements StaffMapper {
+public class StaffMapperImpl extends StaffMapper {
 
     @Override
     public Staff mapToStaff(CreateStaffRequest createStaffRequest, User user) {
@@ -34,6 +35,7 @@ public class StaffMapperImpl implements StaffMapper {
         if ( user != null ) {
             staff.setUser( user );
         }
+        staff.setStatus( 1 );
 
         return staff;
     }
@@ -62,12 +64,14 @@ public class StaffMapperImpl implements StaffMapper {
         GetStaffResponse getStaffResponse = new GetStaffResponse();
 
         getStaffResponse.setUsername( staffUserUsername( staff ) );
+        getStaffResponse.setRoleName( staffUserRolesRoleName( staff ) );
         getStaffResponse.setId( staff.getId() );
         getStaffResponse.setFirstName( staff.getFirstName() );
         getStaffResponse.setLastName( staff.getLastName() );
         getStaffResponse.setPhone( staff.getPhone() );
         getStaffResponse.setEmail( staff.getEmail() );
         getStaffResponse.setAddress( staff.getAddress() );
+        getStaffResponse.setStatus( staff.getStatus() );
 
         return getStaffResponse;
     }
@@ -85,5 +89,24 @@ public class StaffMapperImpl implements StaffMapper {
             return null;
         }
         return username;
+    }
+
+    private String staffUserRolesRoleName(Staff staff) {
+        if ( staff == null ) {
+            return null;
+        }
+        User user = staff.getUser();
+        if ( user == null ) {
+            return null;
+        }
+        Role roles = user.getRoles();
+        if ( roles == null ) {
+            return null;
+        }
+        String roleName = roles.getRoleName();
+        if ( roleName == null ) {
+            return null;
+        }
+        return roleName;
     }
 }

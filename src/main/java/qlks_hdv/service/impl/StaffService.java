@@ -11,6 +11,7 @@ import qlks_hdv.entity.User;
 import qlks_hdv.exception.ConflictException;
 import qlks_hdv.exception.NotFoundException;
 import qlks_hdv.mapper.StaffMapper;
+import qlks_hdv.repository.RentingDetailRepository;
 import qlks_hdv.repository.StaffRepository;
 import qlks_hdv.repository.UserRepository;
 import qlks_hdv.request.CreateStaffRequest;
@@ -28,6 +29,8 @@ public class StaffService implements IStaffService {
   private final UserRepository userRepository;
 
   private final StaffMapper staffMapper;
+
+  private final RentingDetailRepository rentingDetailRepository;
 
 
   @Override
@@ -74,7 +77,13 @@ public class StaffService implements IStaffService {
     if (!staffRepository.existsById(staffId)) {
       throw new NotFoundException("user-not-found");
     }
-    staffRepository.deleteById(staffId);
+    if (rentingDetailRepository.existsByStaffId(staffId)) {
+      Staff staff = staffRepository.findById(staffId)
+          .orElseThrow(() -> new NotFoundException("staff-not-found"));
+      staff.setStatus(0);
+    } else {
+      staffRepository.deleteById(staffId);
+    }
   }
 
   @Override

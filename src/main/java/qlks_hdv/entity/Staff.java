@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@EqualsAndHashCode( exclude="user")
+@EqualsAndHashCode(exclude = "user")
 @Table(name = "Staff")
 public class Staff {
 
@@ -42,6 +42,9 @@ public class Staff {
 
   @Column(name = "address")
   private String address;
+
+  @Column(name = "status")
+  private Integer status;
 
   @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
   @JoinColumn(name = "username")

@@ -11,4 +11,6 @@ public interface RentingDetailRepository extends JpaRepository<RentingDetail, Re
       Integer roomtypeId);
 
   List<RentingDetail> findAllByBookingCardBookingId(Integer bookingCardId);
+
+  Boolean existsByStaffId(Integer staffId);
 }

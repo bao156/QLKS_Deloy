@@ -15,7 +15,13 @@ public class GetStaffResponse {
 
   private String email;
 
+  private String roleName;
+
   private String address;
 
   private String username;
+
+  private Integer status;
+
+
 }
