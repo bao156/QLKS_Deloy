@@ -10,11 +10,11 @@ import qlks_hdv.response.GetUserResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-07-12T23:27:56+0700",
+    date = "2021-07-13T00:48:10+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
-public class UserMapperImpl implements UserMapper {
+public class UserMapperImpl extends UserMapper {
 
     @Override
     public User mapToUser(CreateUserRequest createUserRequest, Role role, String encodePassword) {
@@ -33,6 +33,7 @@ public class UserMapperImpl implements UserMapper {
         if ( encodePassword != null ) {
             user.setPassword( encodePassword );
         }
+        user.setStatus( 1 );
 
         return user;
     }
@@ -58,6 +59,7 @@ public class UserMapperImpl implements UserMapper {
 
         if ( user != null ) {
             getUserResponse.setUsername( user.getUsername() );
+            getUserResponse.setStatus( user.getStatus() );
         }
         if ( roleName != null ) {
             getUserResponse.setRoleName( roleName );

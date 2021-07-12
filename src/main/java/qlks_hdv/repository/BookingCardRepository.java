@@ -17,4 +17,6 @@ public interface BookingCardRepository extends JpaRepository<BookingCard, Intege
   Boolean existsBookingCardByBookingIdAndAndCustomerUserUsername(Integer bookingId,
       String username);
 
+  Boolean existsByCustomerId(Integer id);
+
 }

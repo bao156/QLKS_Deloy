@@ -9,4 +9,6 @@ public class GetUserResponse {
 
   private String roleName;
 
+  private Integer status;
+
 }

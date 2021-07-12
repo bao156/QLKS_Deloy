@@ -80,7 +80,9 @@ public class StaffService implements IStaffService {
     if (rentingDetailRepository.existsByStaffId(staffId)) {
       Staff staff = staffRepository.findById(staffId)
           .orElseThrow(() -> new NotFoundException("staff-not-found"));
+      staff.getUser().setStatus(0);
       staff.setStatus(0);
+      staffRepository.save(staff);
     } else {
       staffRepository.deleteById(staffId);
     }

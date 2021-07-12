@@ -3,6 +3,7 @@ package qlks_hdv.mapper;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 import qlks_hdv.entity.Customer;
+import qlks_hdv.entity.Role;
 import qlks_hdv.entity.User;
 import qlks_hdv.request.CreateCustomerRentingRequest;
 import qlks_hdv.request.CreateCustomerRequest;
@@ -11,7 +12,7 @@ import qlks_hdv.response.GetCustomerResponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-07-12T23:27:56+0700",
+    date = "2021-07-13T00:48:41+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component
@@ -63,6 +64,7 @@ public class CustomerMapperImpl implements CustomerMapper {
 
         if ( customer != null ) {
             getCustomerResponse.setCmnd( customer.getCMND() );
+            getCustomerResponse.setRoleName( customerUserRolesRoleName( customer ) );
             getCustomerResponse.setId( customer.getId() );
             getCustomerResponse.setFirstName( customer.getFirstName() );
             getCustomerResponse.setLastName( customer.getLastName() );
@@ -89,5 +91,24 @@ public class CustomerMapperImpl implements CustomerMapper {
         customer.setCMND( createCustomerRentingRequest.getCMND() );
 
         return customer;
+    }
+
+    private String customerUserRolesRoleName(Customer customer) {
+        if ( customer == null ) {
+            return null;
+        }
+        User user = customer.getUser();
+        if ( user == null ) {
+            return null;
+        }
+        Role roles = user.getRoles();
+        if ( roles == null ) {
+            return null;
+        }
+        String roleName = roles.getRoleName();
+        if ( roleName == null ) {
+            return null;
+        }
+        return roleName;
     }
 }

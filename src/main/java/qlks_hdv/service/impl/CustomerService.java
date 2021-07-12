@@ -10,6 +10,7 @@ import qlks_hdv.entity.User;
 import qlks_hdv.exception.ConflictException;
 import qlks_hdv.exception.NotFoundException;
 import qlks_hdv.mapper.CustomerMapper;
+import qlks_hdv.repository.BookingCardRepository;
 import qlks_hdv.repository.CustomerRepository;
 import qlks_hdv.repository.UserRepository;
 import qlks_hdv.request.CreateCustomerRequest;
@@ -26,6 +27,7 @@ public class CustomerService implements ICustomerService {
   private final CustomerRepository customerRepository;
 
   private final CustomerMapper customerMapper;
+  private final BookingCardRepository bookingCardRepository;
 
   @Override
   @Transactional
@@ -61,6 +63,10 @@ public class CustomerService implements ICustomerService {
   public void deleteCustomer(Integer customerId) {
     if (!customerRepository.existsById(customerId)) {
       throw new NotFoundException("customer-not-found");
+    }
+    if (bookingCardRepository.existsByCustomerId(customerId)) {
+      Customer customer = customerRepository.findById(customerId)
+          .orElseThrow(() -> new NotFoundException("customer-not-found"));
     }
     customerRepository.deleteById(customerId);
   }

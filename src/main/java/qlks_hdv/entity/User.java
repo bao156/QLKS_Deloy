@@ -25,6 +25,9 @@ public class User {
   @Column(name = "password")
   private String password;
 
+  @Column(name = "status")
+  private Integer status;
+
   @ManyToOne
   @JoinColumn(name = "role_id")
   private Role roles;
