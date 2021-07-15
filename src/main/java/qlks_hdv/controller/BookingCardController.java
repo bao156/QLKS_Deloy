@@ -3,6 +3,7 @@ package qlks_hdv.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,13 @@ public class BookingCardController {
     return ResponseEntity.ok().body(bookingCardService.getAllBookingCardsByUsername(username));
   }
 
-  @PutMapping("{bookingId}/{isCancel}")
+  @GetMapping("/reservated-booking")
+  public ResponseEntity<List<GetBookingCardReponse>> getAllBookingCardsInReservated() {
+
+    return ResponseEntity.ok().body(bookingCardService.getAllBookingCardsInReservated());
+  }
+
+  @PutMapping("/{bookingId}/{isCancel}")
   public ResponseEntity<Void> disableBookingCard(@PathVariable("bookingId") Integer bookingId,
       @PathVariable("isCancel") Boolean isCancel) {
     bookingCardService.changeStatusBookingCard(bookingId, isCancel);
@@ -53,10 +60,11 @@ public class BookingCardController {
     return ResponseEntity.ok(bookingCardService.getRevenueAtDate(year));
   }
 
-  @PutMapping("payment/{bookingId}/{username}")
+  @PutMapping("/payment/{bookingId}/{username}")
   public ResponseEntity<GetBookingCardForPaymentReponse> paymentBookingCard(
-      @PathVariable("bookingId") Integer bookingId, @PathVariable("username") String username) {
-    return ResponseEntity.ok().body(bookingCardService.Payment(bookingId, username));
+      @PathVariable("bookingId") Integer bookingId, @PathVariable("username") String username,
+      HttpServletResponse response) {
+    return ResponseEntity.ok().body(bookingCardService.Payment(bookingId, username, response));
   }
 
 }

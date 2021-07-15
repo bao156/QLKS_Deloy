@@ -2,6 +2,7 @@ package qlks_hdv.service;
 
 import java.util.HashMap;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import qlks_hdv.entity.BookingCard;
 import qlks_hdv.request.CreateBookingCardRequest;
 import qlks_hdv.response.GetBookingCardForPaymentReponse;
@@ -13,6 +14,8 @@ public interface IBookingCardService {
 
   List<GetBookingCardReponse> getAllBookingCardsByUsername(String username);
 
+  List<GetBookingCardReponse> getAllBookingCardsInReservated();
+
   void updatePriceOfBookingCard(int bookingId);
 
   void updateCompleteDateOnBookingCard(int bookingId);
@@ -23,5 +26,6 @@ public interface IBookingCardService {
 
   List<Integer> getPriceCalcute(int year, BookingCard bookingCard);
 
-  GetBookingCardForPaymentReponse Payment(Integer bookingId, String username);
+  GetBookingCardForPaymentReponse Payment(Integer bookingId, String username,
+      HttpServletResponse response);
 }

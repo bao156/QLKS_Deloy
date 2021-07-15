@@ -9,6 +9,8 @@ public interface BookingCardRepository extends JpaRepository<BookingCard, Intege
 
   List<BookingCard> findAllByCustomerUserUsername(String username);
 
+  List<BookingCard> findAllByStatus(String status);
+
   Optional<BookingCard> findBookingCardByStatusAndCustomerUserUsername(String status,
       String username);
 
@@ -18,5 +20,7 @@ public interface BookingCardRepository extends JpaRepository<BookingCard, Intege
       String username);
 
   Boolean existsByCustomerId(Integer id);
+
+  Boolean existsByBookingId(Integer bookingId);
 
 }

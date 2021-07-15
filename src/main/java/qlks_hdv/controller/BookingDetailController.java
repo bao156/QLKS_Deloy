@@ -40,6 +40,13 @@ public class BookingDetailController {
         .body(bookingDetailService.getBookingDetailByBookingCardId(bookingId, username));
   }
 
+  @GetMapping("/{bookingId}")
+  public ResponseEntity<List<GetBookingDetailResponse>> getBookingDetailsByBookingId(
+      @PathVariable("bookingId") Integer bookingId) {
+    return ResponseEntity.ok()
+        .body(bookingDetailService.getBookingDetailByBookingId(bookingId));
+  }
+
   @GetMapping
   public ResponseEntity<List<GetRoomTypeWithPriceResponse>> getBookingDetails() {
     return ResponseEntity.ok(bookingDetailService.getRoomTypeBookingRank());

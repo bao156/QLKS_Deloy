@@ -12,7 +12,7 @@ import qlks_hdv.response.GetBookingCardReponse;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-07-13T00:48:11+0700",
+    date = "2021-07-15T13:17:19+0700",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 15 (Oracle Corporation)"
 )
 @Component

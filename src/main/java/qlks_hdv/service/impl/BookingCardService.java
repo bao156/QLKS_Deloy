@@ -1,5 +1,14 @@
 package qlks_hdv.service.impl;
 
+import com.lowagie.text.Document;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import java.awt.Color;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,6 +17,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -21,22 +31,28 @@ import qlks_hdv.entity.Discount;
 import qlks_hdv.entity.RentingDetail;
 import qlks_hdv.entity.Room;
 import qlks_hdv.entity.RoomStatus;
+import qlks_hdv.entity.RoomType;
 import qlks_hdv.entity.ServiceDetail;
 import qlks_hdv.entity.Staff;
 import qlks_hdv.exception.BadRequestException;
 import qlks_hdv.exception.NotFoundException;
 import qlks_hdv.mapper.BookingCardMapper;
+import qlks_hdv.mapper.BookingDetailMapper;
+import qlks_hdv.mapper.ServiceDetailMapper;
 import qlks_hdv.repository.BookingCardRepository;
 import qlks_hdv.repository.BookingDetailRepository;
 import qlks_hdv.repository.CustomerRepository;
 import qlks_hdv.repository.DiscountRepository;
 import qlks_hdv.repository.RentingDetailRepository;
 import qlks_hdv.repository.RoomRepostiory;
+import qlks_hdv.repository.RoomTypeRepository;
 import qlks_hdv.repository.ServiceDetailRepository;
 import qlks_hdv.repository.StaffRepository;
 import qlks_hdv.request.CreateBookingCardRequest;
 import qlks_hdv.response.GetBookingCardForPaymentReponse;
 import qlks_hdv.response.GetBookingCardReponse;
+import qlks_hdv.response.GetBookingDetailResponse;
+import qlks_hdv.response.GetServiceDetailResponse;
 import qlks_hdv.service.IBookingCardService;
 
 @Data
@@ -53,6 +69,21 @@ public class BookingCardService implements IBookingCardService {
   private final StaffRepository staffRepository;
   private final RentingDetailRepository rentingDetailRepository;
   private final RoomRepostiory roomRepostiory;
+  private final BookingDetailMapper bookingDetailMapper;
+  private final RoomTypeRepository roomTypeRepository;
+  private final ServiceDetailMapper serviceDetailMapper;
+
+  @Override
+  public List<GetBookingCardReponse> getAllBookingCardsInReservated() {
+
+    List<BookingCard> bookingCardList = bookingCardRepository
+        .findAllByStatus("Reservated");
+    List<GetBookingCardReponse> getBookingCardReponseList = bookingCardList.stream()
+        .map(develop -> bookingCardMapper.mapToGetBookingCardReponse(develop))
+        .collect(Collectors.toList());
+    return getBookingCardReponseList;
+
+  }
 
 
   @Override
@@ -194,7 +225,8 @@ public class BookingCardService implements IBookingCardService {
 
   @Override
   @Transactional
-  public GetBookingCardForPaymentReponse Payment(Integer bookingId, String username) {
+  public GetBookingCardForPaymentReponse Payment(Integer bookingId, String username,
+      HttpServletResponse response) {
 
     BookingCard bookingCard = bookingCardRepository.findById(bookingId)
         .orElseThrow(() -> new NotFoundException("booking-card-not-found"));
@@ -233,7 +265,136 @@ public class BookingCardService implements IBookingCardService {
       room.setStatus(RoomStatus.Empty);
     }
     bookingCard.setStatus("Completed");
+
+    List<GetBookingDetailResponse> getBookingDetailResponses = bookingDetailList.stream()
+        .map(detail -> bookingDetailMapper.mapToGetBookingDetailResponse(detail))
+        .collect(Collectors.toList());
+
+    List<GetServiceDetailResponse> services = serviceDetailList.stream()
+        .map(detail -> serviceDetailMapper.mapToServiceDetailResponse(detail))
+        .collect(Collectors.toList());
+    makePDF(response, getBookingCardForPaymentReponse, getBookingDetailResponses, services);
     return getBookingCardForPaymentReponse;
   }
+
+  private void makePDF(
+      HttpServletResponse response, GetBookingCardForPaymentReponse payment,
+      List<GetBookingDetailResponse> bookingDetailList,
+      List<GetServiceDetailResponse> serviceList) {
+    try {
+      Document document = new Document(PageSize.A4);
+      PdfWriter.getInstance(document, response.getOutputStream());
+
+      document.open();
+      Font font1 = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+      font1.setSize(22);
+      font1.setColor(Color.PINK);
+
+      Paragraph p = new Paragraph("INVOICE", font1);
+      p.setAlignment(Paragraph.ALIGN_CENTER);
+
+      Font font = FontFactory.getFont(FontFactory.COURIER_BOLD);
+      font.setSize(14);
+      font.setColor(Color.darkGray);
+      Paragraph p1 = new Paragraph("", font);
+      p.setAlignment(Paragraph.ALIGN_CENTER);
+      Paragraph pBookingId = new Paragraph("Booking id: " + payment.getBookingId(), font);
+      pBookingId.setAlignment(Paragraph.ALIGN_LEFT);
+
+      Paragraph p2 = new Paragraph("", font);
+      p.setAlignment(Paragraph.ALIGN_CENTER);
+      Paragraph pFullName = new Paragraph(
+          "Full name: " + payment.getFirstName() + " " + payment.getFirstName(), font);
+      pFullName.setAlignment(Paragraph.ALIGN_LEFT);
+
+      Paragraph p3 = new Paragraph("", font);
+      p.setAlignment(Paragraph.ALIGN_CENTER);
+      Paragraph pCMND = new Paragraph("CMND: " + payment.getCMND(), font);
+      pCMND.setAlignment(Paragraph.ALIGN_LEFT);
+
+      Paragraph p4 = new Paragraph("", font);
+      p.setAlignment(Paragraph.ALIGN_CENTER);
+      Paragraph pComplete = new Paragraph("Complete At: " + payment.getCompleteAt(), font);
+      pComplete.setAlignment(Paragraph.ALIGN_LEFT);
+
+      Paragraph p5 = new Paragraph("\n", font);
+      Paragraph p7 = new Paragraph("ROOM", font);
+
+      document.add(p);
+      document.add(p1);
+      document.add(pBookingId);
+      document.add(p2);
+      document.add(pFullName);
+      document.add(p3);
+      document.add(pCMND);
+      document.add(p4);
+      document.add(pComplete);
+      document.add(p5);
+      document.add(p7);
+
+      PdfPTable table = new PdfPTable(3);
+      table.setWidthPercentage(100f);
+      table.setWidths(new float[]{1.5f, 1.5f, 3.0f});
+      table.setSpacingBefore(20);
+
+      writeTableData(table, bookingDetailList);
+
+      Paragraph pRoomTotal = new Paragraph("Room total: " + payment.getRoomAmount(), font);
+      pRoomTotal.setAlignment(Paragraph.ALIGN_RIGHT);
+      Paragraph p8 = new Paragraph("\n", font);
+      Paragraph p10 = new Paragraph("Service", font);
+      document.add(table);
+      document.add(pRoomTotal);
+      document.add(p8);
+      document.add(p10);
+
+      PdfPTable table1 = new PdfPTable(3);
+      table1.setWidthPercentage(100f);
+      table1.setWidths(new float[]{1.5f, 1.5f, 3.0f});
+      table1.setSpacingBefore(20);
+      writeTableDataService(table1, serviceList);
+      document.add(table1);
+
+      Paragraph pServiceTotal = new Paragraph("Service total: " + payment.getServiceAmount(), font);
+      pServiceTotal.setAlignment(Paragraph.ALIGN_RIGHT);
+      document.add(pServiceTotal);
+
+      Paragraph p6 = new Paragraph("\n", font);
+      document.add(p6);
+
+      Integer total = payment.getServiceAmount() + payment.getRoomAmount();
+      Paragraph pTotal = new Paragraph("Pay total: " + total, font);
+      pTotal.setAlignment(Paragraph.ALIGN_CENTER);
+      document.add(pTotal);
+
+      document.close();
+    } catch (IOException e) {
+      throw new BadRequestException("cant-get-file");
+    }
+
+  }
+
+  private void writeTableDataService(PdfPTable table,
+      List<GetServiceDetailResponse> serviceList) {
+
+    for (GetServiceDetailResponse serviceDetail : serviceList) {
+      table.addCell(String.valueOf(serviceDetail.getServiceName()));
+      table.addCell(String.valueOf(serviceDetail.getQuantity()));
+      table.addCell(String.valueOf(serviceDetail.getPrice()));
+    }
+
+  }
+
+  private void writeTableData(PdfPTable table, List<GetBookingDetailResponse> bookingDetailList) {
+
+    for (GetBookingDetailResponse bookingDetail : bookingDetailList) {
+      RoomType roomType = roomTypeRepository.getOne(bookingDetail.getTypeId());
+      table.addCell(String.valueOf(roomType.getName()));
+      table.addCell(String.valueOf(bookingDetail.getAmount()));
+      table.addCell(String.valueOf(bookingDetail.getPrice()));
+    }
+
+  }
+
 
 }

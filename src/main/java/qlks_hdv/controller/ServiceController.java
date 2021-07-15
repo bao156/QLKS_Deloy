@@ -1,6 +1,7 @@
 package qlks_hdv.controller;
 
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class ServiceController {
   @PutMapping("/{serviceId}")
   public ResponseEntity<Void> updateService(
       @Valid @RequestBody UpdateServiceRequest updateServiceRequest,
-      @PathVariable("serviceId") Integer serviceId) {
+      @PathVariable("serviceId") Integer serviceId, HttpServletResponse response) {
     servicesService.updateService(updateServiceRequest, serviceId);
     return ResponseEntity.ok().build();
   }

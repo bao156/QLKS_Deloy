@@ -138,6 +138,21 @@ public class BookingDetailService implements IBookingDetailService {
   }
 
   @Override
+  public List<GetBookingDetailResponse> getBookingDetailByBookingId(Integer bookingId) {
+
+    if (!bookingCardRepository
+        .existsByBookingId(bookingId)) {
+      throw new NotFoundException("booking-card-not-found");
+    }
+    List<BookingDetail> bookingDetailList = bookingDetailRepository
+        .findAllByBookingCardBookingId(bookingId);
+
+    return bookingDetailList.stream()
+        .map(detail -> bookingDetailMapper.mapToGetBookingDetailResponse(detail))
+        .collect(Collectors.toList());
+  }
+
+  @Override
   public Integer getPriceOfARoom(String recieveDate, String backDate, Integer typeId) {
     Price priceAtWeekend = pricesRepository.findById(new PriceId(typeId, true))
         .orElseThrow(() -> new NotFoundException("type-not-found"));
