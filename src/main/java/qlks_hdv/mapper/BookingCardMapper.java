@@ -12,7 +12,6 @@ import qlks_hdv.response.GetBookingCardReponse;
 
 @Mapper(componentModel = "spring")
 public interface BookingCardMapper {
-
   @Mappings({
       @Mapping(target = "price", source = "price"),
       @Mapping(target = "status", source = "status"),

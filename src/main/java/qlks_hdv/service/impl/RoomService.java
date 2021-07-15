@@ -91,6 +91,18 @@ public class RoomService implements IRoomService {
 
   }
 
+  @Override
+  public List<GetRoomResponseWithPrice> getAllRoomsByRoomTypeId(Integer roomTypeId) {
+
+    return roomRepostiory.findAllByTypeId(roomTypeId).stream().map(room -> {
+      PriceId priceId = new PriceId(room.getType().getId(), isWeekend());
+      Price price = pricesRepository.getOne(priceId);
+      return roomMapper
+          .mapToGetRoomResponseWithPrice(room, price.getPrice());
+    }).collect(Collectors.toList());
+
+  }
+
   private static Boolean isWeekend() {
     Date now = new Date();
     Calendar cal = Calendar.getInstance();

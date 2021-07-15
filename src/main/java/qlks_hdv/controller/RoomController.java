@@ -51,6 +51,12 @@ public class RoomController {
     return ResponseEntity.ok().body(roomService.getAllRooms());
   }
 
+  @GetMapping("/room-type/{roomTypeId}")
+  public ResponseEntity<List<GetRoomResponseWithPrice>> getAllRoomsByRoomTypeId(
+      @PathVariable("roomTypeId") Integer roomTypeId) {
+    return ResponseEntity.ok().body(roomService.getAllRoomsByRoomTypeId(roomTypeId));
+  }
+
   @GetMapping("/detail")
   public ResponseEntity<GetRoomResponseWithPrice> getRoomDetail(@RequestParam String roomCode) {
     return ResponseEntity.ok().body(roomService.getRoomDetail(roomCode));

@@ -17,4 +17,6 @@ public interface IRoomService {
 
   List<GetRoomResponseWithPrice> getAllRooms();
 
+  List<GetRoomResponseWithPrice> getAllRoomsByRoomTypeId(Integer roomTypeId);
+
 }

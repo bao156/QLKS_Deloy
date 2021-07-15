@@ -18,5 +18,7 @@ public interface BookingDetailRepository extends JpaRepository<BookingDetail, Bo
 
   Optional<BookingDetail> findByBookingCardBookingIdAndTypeId(Integer bookingId, Integer typeId);
 
+  void deleteAllByBookingCardBookingId(Integer bookingId);
+
 
 }

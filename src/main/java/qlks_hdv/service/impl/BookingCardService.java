@@ -182,6 +182,9 @@ public class BookingCardService implements IBookingCardService {
         bookingCard.setStatus("Completed");
       }
     }
+    if (bookingCard.getStatus().equals("Cancel")) {
+      bookingDetailRepository.deleteAllByBookingCardBookingId(bookingCard.getBookingId());
+    }
     bookingCardRepository.save(bookingCard);
 
   }
